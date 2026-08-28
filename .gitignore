@@ -4,6 +4,10 @@ output/
 experiments/xproc-cleanup/out/
 experiments/xproc-cleanup/jats-dtd/
 
+# Built gem artifacts (gem build rcb.gemspec output); source is tracked, the
+# packaged .gem is a build product.
+*.gem
+
 # Machine-specific tool-path overrides (copy from rcb.config.local.example.rb).
 # Matched at any cascade level.
 rcb.config.local.rb

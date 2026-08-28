@@ -24,8 +24,8 @@ Run from any directory within a cascade:
 # List all tasks
 rcb
 
-# Show cascade structure
-rcb --show-cascade
+# Show cascade traversal + load order
+rcb --debug list
 
 # Run a specific task
 rcb default
@@ -36,7 +36,7 @@ rcb --debug
 
 ## Architecture
 
-The `rcb` command traverses upward from the current directory until it finds `.cascaderoot`:
+The `rcb` command traverses upward from the current directory until it finds `.rcbroot`:
 
 ```
 article_01/source/     # Start here
@@ -47,21 +47,21 @@ volume_01/             # Found Rakefile
        ↓
 journal/               # Found Rakefile
        ↓
-publisher/             # Found Rakefile AND .cascaderoot → STOP
+publisher/             # Found Rakefile AND .rcbroot → STOP
 ```
 
-Files are loaded in **root-first** order, with a shared `cfg` Hash for configuration.
+Files are loaded in **root-first** order, with a shared `CFG` Hash for configuration.
 
 ## Rakefile Pattern
 
 ```ruby
-# cfg is available in all Rakefiles
-cfg['basename'] ||= 'article'
-cfg['source_format'] ||= 'docx'
+# CFG is available in all Rakefiles
+CFG['basename'] ||= 'article'
+CFG['source_format'] ||= 'docx'
 
 desc "A build task"
 task :build do
-  puts "Building #{cfg['basename']}"
+  puts "Building #{CFG['basename']}"
 end
 ```
 
@@ -70,7 +70,6 @@ end
 ```bash
 bundle install
 bundle exec rake test
-bundle exec rake rubocop
 ```
 
 To run RCB from the working tree without `gem install`, use the in-repo
