@@ -441,6 +441,25 @@ aus JATS `title-group` wird in **beiden** Renderern sichtbar (vorher nur
 **Offen (Folgetask 2):** Rezensionen — besprochenes Werk als
 `<product>`/`<related-object>`, Angabe aus dem Titel raus.
 
+### 2026-08-29: Catalog-DOCTYPE entfernt (xml_typo/Saxon-Catalog-Bug)
+**Decision:** DOCTYPE aus der Catalog-Datei
+`pub/_assets/jats-dtd/catalog-jats-v1-2-no-base.xml` entfernen.
+**Rationale:** Die Catalog trug eine DOCTYPE, die die OASIS-Catalog-DTD
+über's Netz referenzierte (`http://www.oasis-open.org/…/catalog.dtd`).
+Saxons Apache-Catalog-Resolver parst die Datei per SAX; der Parser versucht
+die DOCTYPE-SYSTEM-id zu holen → oasis-open.org redirectet http→https →
+der Resolver-URL-Handler kann kein `https` → `unknown protocol: https`
+→ Catalog-Parsing bricht ab → JATS-DTD (`JATS-publishing1.dtd`) wird nicht
+aufgelöst → alle Saxon-Schritte mit `-catalog:` scheitern
+(xml_typo, xml_to_refs, xml_to_html, xml_to_html_test). Die DOCTYPE ist
+rein deklarativ (Catalog braucht keine DTD zum Parsen), Entfernen ist
+verlustfrei. Gleiche Fehlerklasse wie die DOCTYPE-Strips in
+`validate_xml_rng` (2026-05-19) und im `xml_to_html`-Bereich — nur dass
+sie hier die Catalog-Datei selbst, nicht die Inhalts-XML betraf.
+**Changes:** Einzeilige Quelländerung an der Catalog-Datei (DOCTYPE
+durch erklärenden Kommentar ersetzt). Kaltes `build_all` auf dem
+Demo-Artikel (`jds-2026-001-mustermann`) danach vollständig grün.
+
 ---
 
 ## Abgeschlossene Phasen (Übersicht)

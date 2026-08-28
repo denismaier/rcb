@@ -1,8 +1,13 @@
 <?xml version="1.0"?>
-<!DOCTYPE catalog PUBLIC
-"-//OASIS//DTD Entity Resolution XML Catalog V3.0//EN"
-"http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
-
+<!-- DOCTYPE removed: the OASIS catalog DTD is referenced over the network
+     (http://www.oasis-open.org/.../catalog.dtd). Saxon's Apache catalog
+     resolver parses this file with SAX and tries to fetch the DOCTYPE's
+     SYSTEM id; oasis-open.org redirects http->https and the resolver's
+     URL handler rejects https ("unknown protocol: https"), aborting
+     catalog parsing so the JATS DTD is never resolved. The DOCTYPE is
+     purely declarative (catalog needs no DTD to parse), so dropping it
+     is lossless. Same fix class as the DOCTYPE-strips in validate_xml_rng
+     and xml_to_html (rcb.rake). -->
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="public">
 
   <!-- ============================================================= -->
