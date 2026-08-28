@@ -4,6 +4,10 @@ output/
 experiments/xproc-cleanup/out/
 experiments/xproc-cleanup/jats-dtd/
 
+# Machine-specific tool-path overrides (copy from rcb.config.local.example.rb).
+# Matched at any cascade level.
+rcb.config.local.rb
+
 # Real production content lives under pub/bop/<journal>/volume_<year>/ and
 # stays local (real manuscripts, not committed). Journal-level config
 # (metadata.yaml, rcb.rake, _assets/schematron) sits one level up and IS

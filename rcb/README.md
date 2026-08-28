@@ -73,6 +73,10 @@ bundle exec rake test
 bundle exec rake rubocop
 ```
 
+To run RCB from the working tree without `gem install`, use the in-repo
+`rcb-dev` / `rcb-dev.bat` wrapper at the repo root — see
+[`docs/setup.md`](../docs/setup.md).
+
 ## License
 
 CC0-1.0 Universal (public domain dedication). See [LICENSE](LICENSE).

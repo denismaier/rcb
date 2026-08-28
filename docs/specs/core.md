@@ -213,9 +213,12 @@ Reference: `rcb/lib/rcb.rb:29-33, 220-227`.
 Two entry points:
 
 - **`rcb`** — installed gem. Run from end users / production.
-- **`rcb-dev`** — wrapper script (in `~/.local/dev-bin`) that runs
-  `rcb` from the working tree without `gem install`. Use during
-  development.
+- **`rcb-dev`** — in-repo wrapper (`rcb-dev` for bash/Git Bash,
+  `rcb-dev.bat` for Windows cmd/PowerShell) that runs RCB from the
+  working tree without `gem install`. Self-resolving (finds its own
+  location via `BASH_SOURCE` / `%~dp0`), so it works from any clone and
+  any cwd once on PATH. Use during development. See
+  [`docs/setup.md`](../setup.md) for how to put it on PATH.
 
 Flags:
 

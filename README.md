@@ -22,6 +22,8 @@ pipeline is pure user code of the gem.
 ## Where to go next
 
 **I want to use the pipeline (edit an article):**
+- [`docs/setup.md`](docs/setup.md) — install Ruby + external tools, get
+  `rcb-dev` on PATH, run a first build.
 - [`pub/docs/user/article-workflow.md`](pub/docs/user/article-workflow.md) —
   guided editor walkthrough (scaffold → metadata → build).
 - [`pub/README.md`](pub/README.md) → Quickstart — run a build in 4 lines.
@@ -37,6 +39,9 @@ pipeline is pure user code of the gem.
 
 ## Quick start
 
+See [`docs/setup.md`](docs/setup.md) for prerequisites (Ruby + external
+tools) and how to put `rcb-dev` on PATH.
+
 ```bash
 # Install the gem (or use rcb-dev, below)
 cd rcb/ && gem build rcb.gemspec && gem install rcb-*.gem
@@ -49,9 +54,10 @@ rcb-dev build_all         # Full pipeline (publish + test)
 rcb-dev --debug list      # Show cascade traversal
 ```
 
-Use `rcb-dev` (the dev wrapper) during development — it runs RCB from the
-working tree without `gem install`, so changes are immediately active. The
-bare `rcb` command runs the installed gem and may be out of sync.
+`rcb-dev` is a self-resolving in-repo wrapper (`rcb-dev` for bash/Git
+Bash, `rcb-dev.bat` for Windows cmd/PowerShell) that runs RCB from the
+working tree without `gem install`, so changes are immediately active.
+The bare `rcb` command runs the installed gem and may be out of sync.
 
 ## Architecture
 
@@ -162,6 +168,9 @@ gem build rcb.gemspec
 gem install rcb-*.gem
 bundle exec rake test          # core unit tests (see roadmap Phase 6 for the rest)
 ```
+
+For development without `gem install`, use the in-repo `rcb-dev` wrapper
+(see [Quick start](#quick-start) and [`docs/setup.md`](docs/setup.md)).
 
 ## License
 

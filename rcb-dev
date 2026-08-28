@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# rcb-dev — run RCB from this working tree (no gem install).
+# Resolves its own location, so it works from any clone and from any
+# cwd (put it on PATH, e.g. symlink into ~/.local/dev-bin).
+set -euo pipefail
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+exec ruby -I"$DIR/rcb/lib" "$DIR/rcb/exe/rcb" "$@"

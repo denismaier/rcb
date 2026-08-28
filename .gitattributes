@@ -1,0 +1,4 @@
+# Keep the bash wrapper LF-only (CRLF breaks the shebang in Git Bash).
+rcb-dev eol=lf
+# Keep the Windows batch wrapper CRLF (native format).
+rcb-dev.bat eol=crlf
