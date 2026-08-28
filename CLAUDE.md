@@ -29,10 +29,14 @@ Gem development:
 
 ## Workflow
 
-- Integration branch: `master` (no remote configured).
+- Integration branch: `main`, tracks `github/main` (public). Push
+  goes directly to GitHub.
+- Old full dev history (142 pre-publish commits) lives on the local
+  `archive` branch — never pushed. Do not delete it, do not push it.
 - **Always work in feature branches.** Create one before starting:
   `git checkout -b feature/<descriptive-name>`. Never commit
-  directly to `master`. Merge back when the work is done.
+  directly to `main`. Squash-merge back (`git merge --squash
+  feature/<name>` → one clean commit) so WIP stays off `main`.
 - `.build/` and `output/` are gitignored — never commit them.
 - When a roadmap phase completes: (1) update the affected spec where it
   lives (gem → `docs/specs/`, pipeline → `pub/docs/dev/`), (2) add a
