@@ -1,0 +1,44 @@
+\startenvironment *
+
+%\setupcaptions[prefix=yes,number=yes]
+
+\setupcaption
+  [figure]
+  [
+   headstyle=smallcaps,
+   numberstopper={:},
+   prefix=yes,
+   number=yes,
+   distance=0em,
+   %way=bysection,
+   %prefixsegments=section,
+   %align=right,
+   location=bottom]
+   
+\setupcaption
+  [graphic]
+  [
+   headstyle=smallcaps,
+   suffix={:},
+   prefix=no,
+   number=no,
+   distance=0em,
+   %way=bysection,
+   %prefixsegments=section,
+   %align=right,
+   location=bottom]
+
+\setupcaption
+	[table]
+	[
+	headstyle=smallcaps,
+	suffix={:},
+	location=top,
+	prefix=yes,
+	number=yes,
+	distance=0em,
+	]
+
+
+
+\stopenvironment

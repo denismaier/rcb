@@ -1,0 +1,1431 @@
+% XML Nodes auswählen
+\startxmlsetups xml:jatssetups
+	% Alles löschen und nur holen, was explizit ausgewählt wird
+	\xmlsetsetup{#1}{*}{-}
+	% Hauptgruppen
+	\xmlsetsetup{#1}{article|front|body|back}{xml:*}
+	% Appendix:
+	\xmlsetsetup{#1}{app|app-group}{xml:*}
+	\xmlsetsetup{#1}{app[@content-type='figures']}{xml:app-figures}
+	% Metadaten
+	\xmlsetsetup{#1}{article-meta}{xml:*}
+	% Titelei
+	\xmlsetsetup{#1}{contrib-group|contrib|name|string-name|surname|given-names|aff|email}{xml:*}
+	\xmlsetsetup{#1}{front/notes}{xml:front:notes}
+	% Sec
+	\xmlsetsetup{#1}{sec[not @sec-type]}{xml:*}
+	\xmlsetsetup{#1}{sec[@sec-type="nonum"]}{xml:sec-nonum}
+	\xmlsetsetup{#1}{sec[@sec-type="thought-break"]}{xml:thought-break}
+	\xmlsetsetup{#1}{sec[@sec-type="thought-break-asterism"]}{xml:thought-break-asterism}
+	% Paragraphen
+	\xmlsetsetup{#1}{p}{xml:*}
+	\xmlsetsetup{#1}{preformat}{xml:preformat}
+	% Blockquotes
+	\xmlsetsetup{#1}{disp-quote}{xml:*}
+	\xmlsetsetup{#1}{disp-quote[@content-type = 'blockquotenoindenting']}{xml:blockquotenoindenting}
+	% Divs
+	\xmlsetsetup{#1}{boxed-text[@content-type = 'dedication']}{xml:dedication}
+	\xmlsetsetup{#1}{boxed-text[@content-type = 'epigraph']}{xml:epigraph}
+	\xmlsetsetup{#1}{disp-quote[@content-type = 'epigraph']}{xml:epigraph}
+	\xmlsetsetup{#1}{attrib}{xml:attrib}
+	\xmlsetsetup{#1}{boxed-text[@content-type = 'signature']}{xml:signature}
+	\xmlsetsetup{#1}{boxed-text[@content-type = 'lettersignature']}{xml:lettersignature}
+	\xmlsetsetup{#1}{boxed-text[@content-type = 'flushleft']}{xml:flushleft}
+	\xmlsetsetup{#1}{boxed-text[@content-type = 'flushright']}{xml:flushright}
+	\xmlsetsetup{#1}{boxed-text[@content-type = 'centered']}{xml:centered}
+	\xmlsetsetup{#1}{boxed-text[@content-type = 'righttoleft']}{xml:righttoleft}
+	\xmlsetsetup{#1}{boxed-text[@content-type = 'blockquotenoindenting']}{xml:blockquotenoindenting}
+	% Fussnoten
+	\xmlsetsetup{#1}{xref[@ref-type='fn']}{xml:footnote}
+    \xmlfilter{#1}{fn-group/fn/command(xml:collectnotes)}
+	% Listen
+	\xmlsetsetup{#1}{list[@list-type='bullet']}{xml:itemize}
+	\xmlsetsetup{#1}{list[@list-type='order']}{xml:enumerate}
+	\xmlsetsetup{#1}{list[@list-type='alpha-lower']}{xml:alphalist}
+	\xmlsetsetup{#1}{list[@list-type='alpha-upper']}{xml:alphalist-uppercase}
+	% Definition List
+	\xmlsetsetup{#1}{def-list}{xml:*}
+	\xmlsetsetup{#1}{def-list/title}{xml:def-list:title}
+	\xmlsetsetup{#1}{def-list/term-head}{xml:def-list:term-head}
+	\xmlsetsetup{#1}{def-list/def-head}{xml:def-list:def-head}
+	\xmlsetsetup{#1}{def-list/def-item}{xml:def-list:def-item}
+	\xmlsetsetup{#1}{def-list/def-item/term}{xml:def-list:def-item:term}
+	\xmlsetsetup{#1}{def-list/def-item/def}{xml:def-list:def-item:def}
+	% Formatierungen
+	\xmlsetsetup{#1}{bold|italic|strike|underline|sc|styled-content|sup|sub}{xml:*}
+	% Links
+	\xmlsetsetup{#1}{ext-link}{xml:*}
+	% Grafiken
+	\xmlsetsetup{#1}{fig}{xml:*}
+	\xmlsetsetup{#1}{fig/graphic}{xml:fig:*}
+	\xmlsetsetup{#1}{graphic}{xml:*}
+	% No graphic figures
+	\xmlsetsetup{#1}{fig[@content-type='no-graphic']}{xml:no-graphic-figure}
+	% Figure Group
+	\xmlsetsetup{\xmldocument}{fig-group}{xml:*}
+	\xmlsetsetup{\xmldocument}{fig-group/caption}{xml:figure-group:caption}
+	\xmlsetsetup{\xmldocument}{fig-group/fig}{xml:figure-group:fig}
+	\xmlsetsetup{\xmldocument}{fig-group/fig/caption}{xml:figure-group:fig:caption}
+	\xmlsetsetup{\xmldocument}{fig-group/fig/graphic}{xml:figure-group:fig:graphic}
+	% Etc
+	\xmlsetsetup{#1}{xref[@ref-type='bibr']}{xml:citeref}
+	% Bibliografie
+	\xmlsetsetup{#1}{ref-list[@content-type="wrapper"]}{xml:ref-list-wrapper}
+	\xmlsetsetup{#1}{ref-list[not @content-type]}{xml:ref-list}
+	\xmlsetsetup{#1}{ref|mixed-citation}{xml:*}
+	% Siglen
+	\xmlsetsetup{#1}{ref-list[@content-type="shorthands"]}{xml:list-of-shorthands}
+	\xmlsetsetup{#1}{ref-list[@content-type="shorthands"]/ref}{xml:shorthand}
+	% Milestones
+	\xmlsetsetup{#1}{milestone-start|milestone-end}{xml:*}
+	% Named Content
+	\xmlsetsetup{#1}{named-content}{xml:*}
+	% Tabellen
+	\xmlsetsetup{#1}{table-wrap[@content-type!='parallel' and @content-type!='parallel-4']}{xml:table-wrap}
+	\xmlsetsetup{#1}{table[@content-type!='parallel' and @content-type!='parallel-r2l']}{xml:table}
+	%\xmlsetsetup{#1}{thead|tbody|tr|th|td}{xml:*}
+	% Paralleltexte
+	\xmlsetsetup{#1}{boxed-text[@content-type='parallel-verse']}{xml:parallel-verse}
+	\xmlsetsetup{#1}{table-wrap[@content-type='parallel']}{xml:table-wrap-parallel}
+	\xmlsetsetup{#1}{table-wrap[@content-type='parallel-4']}{xml:table-wrap-parallel-4}
+	\xmlsetsetup{#1}{table[@content-type='parallel']}{xml:parallel-text}
+	\xmlsetsetup{#1}{table[@content-type='parallel-4']}{xml:parallel-text-4}
+	\xmlsetsetup{#1}{table[@content-type='parallel-r2l']}{xml:parallel-text-r2l}
+	% verse-groups
+	\xmlsetsetup{#1}{verse-group[@content-type='verse-group-wrapper']}{xml:verse-group-wrapper}
+	\xmlsetsetup{#1}{verse-group[@content-type='verse-group-wrapper-centered']}{xml:verse-group-wrapper-centered}
+	\xmlsetsetup{#1}{verse-group[@content-type='stanza']}{xml:verse-group-stanza}
+	\xmlsetsetup{#1}{verse-group[@content-type='stanza']/attrib}{xml:verse-group-stanza:attrib}
+	\xmlsetsetup{#1}{verse-line}{xml:*}
+	%\xmlstripanywhere{#1}{!pre}
+	
+	% Koltai addons
+	\xmlsetsetup{#1}{fig[@content-type='koltai-figure']}{xml:koltai-figure}
+	\xmlsetsetup{#1}{fig[@content-type='koltai-figure-table']}{xml:koltai-figure-table}
+	\xmlsetsetup{#1}{table[@content-type='koltai-parallel']}{xml:koltai:parallel}
+	\xmlsetsetup{#1}{table[@content-type='koltai-parallel-2']}{xml:koltai:parallel-text-2}
+	\xmlsetsetup{#1}{fig[@content-type='koltai-figure']/boxed-text[@content-type='centered']}{xml:koltai-figure:boxed-text}
+	\stopxmlsetups
+
+\xmlregistersetup{xml:jatssetups}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% XML => ConTeXt
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\xmltexdirective#1#2{\doif{#1}{command}{#2}}
+\xmlinstalldirective{tex}{xmltexdirective}
+
+% XML Entities
+
+\xmltexentity {nbsp} {~}
+
+% Injectors
+\startsetups xml:directive:injector:noindent
+  \noindentation
+\stopsetups
+
+\startsetups xml:directive:injector:setRL
+  \setupalign[righttoleft]
+\stopsetups
+
+\startsetups xml:directive:injector:setLR
+  \setupalign[lefttoright]
+\stopsetups
+
+\startsetups xml:directive:injector:judeoarabic
+  \switchtobodyfont[hebrew]
+\stopsetups
+
+\startsetups xml:directive:injector:tolerant
+  \setupalign[verytolerant,stretch]
+\stopsetups
+\startsetups xml:directive:injector:flushright
+  
+\stopsetups
+
+\startsetups xml:directive:injector:newline
+  \crlf
+\stopsetups
+
+\startsetups xml:directive:injector:linebreak
+  %\break
+  \penalty-10000
+\stopsetups
+
+\startsetups xml:directive:injector:lesslooseness
+  \looseness=-1
+\stopsetups
+
+\startsetups xml:directive:injector:morelooseness
+  \looseness=1
+\stopsetups
+
+\startsetups xml:directive:injector:addlinetopage
+  \adaptlayout[lines=+1]
+\stopsetups
+
+\startsetups xml:directive:injector:bTablehead
+  \bTABLEhead
+\stopsetups
+
+\startsetups xml:directive:injector:eTablehead
+  \eTABLEhead
+\stopsetups
+
+
+% Befehle
+%  \xmlfilter{#1}{/title/command(xml:title)}
+%  \xmlflush{#1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Sprache:
+% Hier können wir diesen Mechanismus einsetzen:
+% \xmlmapvalue{emph}{bold} {\bf}
+% \xmlmapvalue{emph}{italic}{\it}
+% Aufrufen so:
+% \xmlvalue{emph}{\xmlatt{#1}{type}}{}
+
+% Wir brauchen mainlanguage am Anfang; bei den übrigen Elementen braucht es language
+% Beim Artikel schalten wir auf \mainlanguage[xml:lang] 
+% Welche Elemente brauchen language? 
+% Aktuell mal nur für einfache <p> => denn diese brauchen wir ja immer/meist für Textinhalte;
+% Ausserdem für <boxed-text>, wird aktuell für divs von verwendet.
+
+\xmlmapvalue{language}{de}{\language[de]}
+\xmlmapvalue{language}{en}{\language[en]}
+\xmlmapvalue{language}{fr}{\language[fr]}
+\xmlmapvalue{language}{he}{\language[he]\switchtobodyfont[hebrew]}
+\xmlmapvalue{language}{agr}{\language[agr]}
+
+\startxmlsetups xml:language
+	\xmlvalue{language}{\xmlatt{#1}{xml:lang}}{}
+\stopxmlsetups
+
+\startxmlsetups xml:mainlanguage
+	%ATTRIBUT DA!
+	%\xmlatt{#1}{xml:lang}
+	\mainlanguage[\xmlatt{#1}{xml:lang}]
+\stopxmlsetups
+
+% Typ des Beitrags holen und entsprechenden Mode aktivieren / funktioniert nicht!
+\startxmlsetups xml:article-type
+	\enablemode[\xmlatt{#1}{article-type}]
+\stopxmlsetups
+
+% Hauptelement + Main Nodes
+
+\startxmlsetups xml:article
+	\begingroup
+		% Type des Beitrags holen / funktioniert nicht
+		\xmlfilter{#1}{.[@article-type]/command(xml:article-type)}
+		% Sprache auswählen
+		\xmlfilter{#1}{.[@xml:lang]/command(xml:mainlanguage)}
+		% Restlicher Inhalt
+		\xmlflush{#1}
+	\endgroup
+\stopxmlsetups
+
+% Front
+\startxmlsetups xml:front
+	\xmlflush{#1}
+\stopxmlsetups
+
+% Body
+\startxmlsetups xml:body
+   	\directsetup{document:start}
+	  \xmlflush{#1}
+   	\directsetup{document:stop}
+\stopxmlsetups
+
+% Back
+\startxmlsetups xml:back
+	\xmlflush{#1}
+\stopxmlsetups
+
+% Appendix
+\startxmlsetups xml:app
+\setuphead[section,subsection][number=no]
+\setuphead[section][page=yes]
+
+	\startstructurelevel[title=\xmlfilter{#1}{/title/command(xml:app-title)}]
+	\xmlflush{#1}
+	\stopstructurelevel
+\stopxmlsetups
+
+% Appendix Figures
+\startxmlsetups xml:app-figures
+\setuphead[section,subsection][number=no]
+\setuphead[section][page=yes]
+\setupfloat[figure][default={force,top,bottom,page}]
+
+	\startstructurelevel[title=\xmlfilter{#1}{/title/command(xml:app-title)}]
+	\xmlflush{#1}
+	\stopstructurelevel
+\stopxmlsetups
+
+\startxmlsetups xml:app-title
+	\xmlflush{#1}
+\stopxmlsetups
+
+% Appendix Group
+\startxmlsetups xml:app-group
+	\xmlflush{#1}
+\stopxmlsetups
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Darstellungen
+\startxmlsetups xml:no-graphic-figure
+	%\startpostponingnotes
+    \startplacefigure[title=\xmlfilter{#1}{/caption/command(xml:caption)}]
+	  \xmlflush{#1}
+    \stopplacefigure
+	%\stoppostponingnotes
+\stopxmlsetups
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Grafiken
+
+%<fig>
+%  <caption>Katze</caption>
+%  <graphic mimetype="image" mime-subtype="jpeg" xlink:href="katze.jpg" xlink:title="" />
+%</fig>
+
+% Grafik ohne Labels
+\startxmlsetups xml:graphic
+	%\startpostponingnotes
+    \startplacegraphic[title=\xmlfilter{#1}{/caption/command(xml:caption)}]
+	  \externalfigure[\xmlatt{#1}{xlink:href}]
+    \stopplacegraphic
+	%\stoppostponingnotes
+\stopxmlsetups
+
+% Grafik mit Label
+\startxmlsetups xml:fig
+	%\startpostponingnotes
+    \startplacefigure[title=\xmlfilter{#1}{/caption/command(xml:caption)}]
+	  \xmlfilter{#1}{/graphic/command(xml:fig:graphic)}
+    \stopplacefigure
+	%\stoppostponingnotes
+\stopxmlsetups
+
+\startxmlsetups xml:caption
+  \xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:fig:graphic
+  \externalfigure[\xmlatt{#1}{xlink:href}]
+\stopxmlsetups
+
+%\placefigure [place] {My Caption} {\externalfigure[myone]}
+
+
+% Demo:
+%<resource type='figure'>
+%<caption>A picture of a cow.</caption>
+%<content><external file="cow.pdf"/></content>
+%</resource>
+
+%\xmlsetsetup{demo}{resource[@type='figure']}{xml:demo:figure}
+%\xmlsetsetup{demo}{external}{xml:demo:*}
+
+%\startxmlsetups xml:demo:figure
+%\placefigure
+%{\xmlfirst{#1}{/caption}}
+%{\xmlfirst{#1}{/content}}
+%\stopxmlsetups
+
+%\startxmlsetups xml:demo:external
+%\externalfigure[\xmlatt{#1}{file}]
+%\stopxmlsetups
+
+% Figure Groups
+\startxmlsetups xml:fig-group
+  \startplacefigure[location=top,title=\xmlfilter{#1}{/caption/command(xml:fig-group:caption)}]
+    \startcombination[distance=2mm,after=,nx=2,ny=1,location=middle]
+      \xmlfilter{#1}{/fig/command(xml:fig-group:fig)}
+    \stopcombination
+  \stopplacefigure
+\stopxmlsetups
+
+\startxmlsetups xml:fig-group:caption
+  \xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:fig-group:fig
+  \startcontent
+    \xmldoif {#1} {/graphic} {
+      \xmlfilter{#1}{/graphic/command(xml:fig-group:fig:graphic)}  [width=.4\textwidth]
+    }
+  \stopcontent
+  \startcaption
+      \xmlfilter{#1}{/caption/command(xml:fig-group:caption)}
+  \stopcaption
+\stopxmlsetups
+
+\startxmlsetups xml:fig-group:fig:caption
+  \xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:fig-group:fig:graphic
+  \externalfigure[\xmlatt{#1}{xlink:href}]
+\stopxmlsetups
+
+%Metadaten
+\startxmlsetups xml:article-meta
+	\setupdocument [
+		pub-year=\xmlfilter{#1}{/pub-date/year/command(xml:article-meta:pubdate:year)},
+		volume=\xmlfilter{#1}{/volume/command(xml:article-meta:volume)},
+		issue=\xmlfilter{#1}{/issue/command(xml:article-meta:issue)},
+		issue-title=\xmlfilter{#1}{/issue-title/command(xml:article-meta:issue-title)},
+		doi=\xmlfilter{#1}{/article-id[@pub-id-type='doi']/command(xml:article-meta:doi)},
+		elocation-id=\xmlfilter{#1}{/elocation-id/command(xml:article-meta:elocation-id)},
+		title=\xmlfilter{#1}{/title-group/article-title/command(xml:article-meta:title-group:article-title)},
+		subtitle=\xmlfilter{#1}{/title-group/subtitle/command(xml:article-meta:title-group:subtitle)},
+		author={\AuthorList},
+		abstract=\xmlfilter{#1}{/abstract/command(xml:article-meta:abstract)},
+	]
+	\setupinteraction [
+		title=\xmlfilter{#1}{/title-group/article-title/command(xml:article-meta:title-group:article-title)},
+		author={\xmlfilter{#1}{/contrib-group/contrib/name/given-names/command(xml:given-names)}\space\xmlfilter{#1}{/contrib-group/contrib/name/surname/command(xml:surname)}},
+	]
+   \xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:article-meta:abstract
+	\xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:article-meta:pubdate
+	\xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:article-meta:pubdate:year
+	\xmlflush{#1}
+\stopxmlsetups
+
+%Volume, Issue, Issue-Tite
+\startxmlsetups xml:article-meta:volume
+	\xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:article-meta:issue
+	\xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:article-meta:issue-title
+	\xmlflush{#1}
+\stopxmlsetups
+
+% elocation id
+\startxmlsetups xml:article-meta:elocation-id
+	\xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:article-meta:doi
+	\xmlflush{#1}
+\stopxmlsetups
+
+% Titel
+\startxmlsetups xml:article-meta:title-group:article-title
+    \ignorespaces\xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:article-meta:title-group:subtitle
+    \ignorespaces\xmlflush{#1}
+\stopxmlsetups
+
+% Autoren
+\startxmlsetups xml:contrib-group
+	\xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:contrib
+  \defineauthor[\xmlfirst{#1}{/name/surname}\xmlfirst{#1}{/name/given-names}]
+  [name={\xmlfirst{#1}{/name/string-name}},
+  given-names={\xmlfirst{#1}{/name/given-names}},
+  surname={\xmlfirst{#1}{/name/surname}},
+  email={\xmlfirst{#1}{/email}},
+  affiliation={\xmlfirst{#1}{/aff}},
+  role={\xmlfilter{#1}{/role/command(xml:article-meta:contrib-group:contrib:role)}},
+  ]
+  \addtocommalist {\xmlfirst{#1}{/name/surname}\xmlfirst{#1}{/name/given-names}} \AuthorList
+\stopxmlsetups
+
+\startxmlsetups xml:name
+	\xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:surname
+	\xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:given-names
+	\xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:string-name
+	\xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:article-meta:contrib-group:contrib:role
+	\xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:aff
+	\xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:email
+	\xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:front:notes
+	\setupdocument [
+		notes={\xmlflush{#1}},
+	]
+\stopxmlsetups
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+
+% Textelemente
+
+% blockstyles
+\xmlmapvalue{content-type}{righttoleft}{\righttoleft}
+
+% Reguläre Paragraphen
+\startxmlsetups xml:p
+	\begingroup
+		% Sprache falls Attribut vorhanden
+		\xmlfilter{#1}{.[@xml:lang]/command(xml:language)}
+		% Style falls Attribut vorhanden
+		\xmlvalue{content-type}{\xmlatt{#1}{content-type}}{}
+		% Inhalt
+		%\currentmainlanguage 
+		%\currentlanguage
+		\xmlflush{#1}
+	\endgroup
+	\par % Ist das schlau, oder soll man \par besser in der Gruppe platzieren?
+\stopxmlsetups
+
+% Preformat Paragraphen
+\startxmlsetups xml:preformat
+	\begingroup
+		% Sprache falls Attribut vorhanden
+		\xmlfilter{#1}{.[@xml:lang]/command(xml:language)}
+		% Style falls Attribut vorhanden
+		\xmlvalue{blockstyle}{\xmlatt{#1}{style}}{}
+		% Inhalt
+		\startmylines
+			\xmlflushlinewise{#1}
+		\stopmylines
+	\endgroup
+\stopxmlsetups
+
+% Boxed Text (divs)
+
+% dedication
+\startxmlsetups xml:dedication
+	\begingroup
+		\setupalign[flushright]
+		% Sprache falls Attribut vorhanden
+		\xmlfilter{#1}{.[@xml:lang]/command(xml:language)} 
+		% Inhalt
+		\xmlflush{#1}
+	\endgroup
+\stopxmlsetups
+
+% signature
+\startxmlsetups xml:signature
+	\blank
+	\begingroup
+		\setupalign[flushleft]
+		\setupindenting[no]
+		% Sprache falls Attribut vorhanden
+		\xmlfilter{#1}{.[@xml:lang]/command(xml:language)} 
+		% Inhalt
+		\xmlflush{#1}
+	\endgroup
+\stopxmlsetups
+
+% lettersignature
+\startxmlsetups xml:lettersignature
+	\blank[small]
+	\begingroup
+		\setupalign[flushleft]
+		\setupindenting[no]
+		% Sprache falls Attribut vorhanden
+		\xmlfilter{#1}{.[@xml:lang]/command(xml:language)} 
+		% Inhalt
+		\xmlflush{#1}
+	\endgroup
+\stopxmlsetups
+
+% Flushleft
+\startxmlsetups xml:flushleft
+	\begingroup
+		\setupalign[flushleft]
+		\setupindenting[no]
+		% Sprache falls Attribut vorhanden
+		\xmlfilter{#1}{.[@xml:lang]/command(xml:language)} 
+		% Inhalt
+		\xmlflush{#1}
+	\endgroup
+\stopxmlsetups
+
+% Flushright
+\startxmlsetups xml:flushright
+	\begingroup
+		\setupalign[flushright]
+		\setupindenting[no]
+		% Sprache falls Attribut vorhanden
+		\xmlfilter{#1}{.[@xml:lang]/command(xml:language)} 
+		% Inhalt
+		\xmlflush{#1}
+	\endgroup
+\stopxmlsetups
+
+% Centered
+\startxmlsetups xml:centered
+	\begingroup
+		\setupalign[center]
+		\setupindenting[no]
+		% Sprache falls Attribut vorhanden
+		\xmlfilter{#1}{.[@xml:lang]/command(xml:language)} 
+		% Inhalt
+		\xmlflush{#1}
+	\endgroup
+\stopxmlsetups
+
+
+
+% Disp-Quote-Noindenting und Blockquotenoindenting
+\startxmlsetups xml:blockquotenoindenting
+	\startblockquote
+	  \setupindenting[none]
+	  \setupwhitespace[small]
+      \xmlflush{#1}
+	\stopblockquote
+\stopxmlsetups
+
+% Right to left
+
+\startxmlsetups xml:righttoleft
+	\begingroup
+		\setupalign[r2l]
+		%\setupindenting[no]
+		% Sprache falls Attribut vorhanden
+		\xmlfilter{#1}{.[@xml:lang]/command(xml:language)} 
+		% Inhalt
+		\xmlflush{#1}
+	\endgroup
+\stopxmlsetups
+
+% epigraph
+\startxmlsetups xml:epigraph
+	\begingroup
+		\setupnarrower[left=1.5\parindent]\startnarrower[left]\setupalign[flushright]
+		% Sprache falls Attribut vorhanden
+		\xmlfilter{#1}{.[@xml:lang]/command(xml:language)} 
+		% Inhalt
+		\xmlflush{#1}
+		\stopnarrower\blank\noindentation
+	\endgroup
+\stopxmlsetups
+
+\startxmlsetups xml:attrib
+	\xmlflush{#1}
+\stopxmlsetups
+
+% Named Content 
+% aktuell brauchen wir das nur für die Sprachwahl
+\startxmlsetups xml:named-content
+	\bgroup\xmlfilter{#1}{.[@xml:lang]/command(xml:language)}\xmlflush{#1}\egroup
+\stopxmlsetups
+
+% Milestones
+% deprecated for language switching
+% keeping for compatibility
+\startxmlsetups xml:milestone-start
+	\bgroup\xmlfilter{#1}{.[@xml:lang]/command(xml:language)}\xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:milestone-end
+	\egroup
+\stopxmlsetups
+
+% Formatierungen
+
+% Superscript
+\startxmlsetups xml:sup
+	\high{\xmlflush{#1}}
+\stopxmlsetups
+
+% Subscript
+\startxmlsetups xml:sub
+	\low{\xmlflush{#1}}
+\stopxmlsetups
+
+% Fett
+\startxmlsetups xml:bold
+	{\bf \xmlflush{#1}}
+\stopxmlsetups
+
+% Kursiv
+\startxmlsetups xml:italic
+	\emph{\xmlflush{#1}}
+	%{\ignorespaces\em \xmlflush{#1}\removeunwantedspaces}
+	% \xmlstrip{#1}{}
+	%{\em \xmlflush{#1}}
+\stopxmlsetups
+
+\startxmlsetups xml:sc
+	{\sc \xmlflush{#1}}
+\stopxmlsetups
+
+% Durchgestrichen
+\startxmlsetups xml:strike
+	\overstrike{\xmlflush{#1}}
+\stopxmlsetups
+
+% Unterstrichen
+\startxmlsetups xml:underline
+	\underbar{\xmlflush{#1}}
+\stopxmlsetups
+
+% Unterstrichen mit Dots
+\startxmlsetups xml:underdot
+	\underdot{\xmlflush{#1}}
+\stopxmlsetups
+
+
+% Unterstrichen mit Dashes
+\startxmlsetups xml:underdash
+	\underdash{\xmlflush{#1}}
+\stopxmlsetups
+
+
+% Named content
+
+% general mappings
+\xmlmapvalue{named-content}{specialemph}{\inframed[background=color,backgroundcolor=gray,frame=off]}
+\xmlmapvalue{named-content}{underdot}{\underdot}
+
+\xmlmapvalue{named-content}{italics-underlined}{\italicsunderlined}
+\define[1]\italicsunderlined{\underbar{\emph{#1}}}
+
+\xmlmapvalue{named-content}{emph-red}{\emphred}
+\define[1]\emphred{\color[middlered]{#1}}
+
+
+% cb:textvar mappings to tex macros
+\xmlmapvalue{named-content}{cb-textvarA}{\cbtextvarA}
+\xmlmapvalue{named-content}{cb-textvarB}{\cbtextvarB}
+\xmlmapvalue{named-content}{cb-textvarC}{\cbtextvarC}
+\xmlmapvalue{named-content}{cb-textvarAB}{\cbtextvarAB}
+\xmlmapvalue{named-content}{cb-textvarAC}{\cbtextvarAC}
+\xmlmapvalue{named-content}{cb-textvarBC}{\cbtextvarBC}
+\xmlmapvalue{named-content}{cb-textvarABC}{\cbtextvarABC}
+% cb textvariants
+\define[1]\cbtextvarA{\underbar{#1}}
+% \define[1]\cbtextvarB{\underdot{#1}}
+\define[1]\cbtextvarB{\inframed[background=color,backgroundcolor=gray,frame=off]{#1}}
+%\define[1]\cbtextvarC{\emph{#1}}
+\define[1]\cbtextvarC{\color[middlered]{#1}}
+% cb textvariant combinations
+\define[1]\cbtextvarAB{\cbtextvarA{\cbtextvarB{#1}}}
+\define[1]\cbtextvarAC{\cbtextvarA{\cbtextvarC{#1}}}
+\define[1]\cbtextvarBC{\cbtextvarB{\cbtextvarC{#1}}}
+\define[1]\cbtextvarABC{\cbtextvarA{\cbtextvarB{\cbtextvarC{#1}}}}
+
+
+
+% Bidi Overrides
+\xmlmapvalue{named-content}{bdoltr}{\lefttoright}
+\xmlmapvalue{named-content}{bdortl}{\righttoleft}
+
+
+
+\startxmlsetups xml:named-content
+	\xmlvalue{named-content}{\xmlatt{#1}{content-type}}{not found}{\xmlflush{#1}}
+\stopxmlsetups
+
+
+% Styled content
+
+\definestartstop[LTR] [before={\begingroup\lefttoright},after=\endgroup]
+\definestartstop[RTL] [before={\begingroup\righttoleft},after=\endgroup]
+
+\xmlmapvalue{style}{direction: ltr}{\lefttoright}
+\xmlmapvalue{style}{direction: rtl}{\righttoleft}
+\xmlmapvalue{style}{hebrew}{\switchtobodyfont[hebrew]}
+
+\startxmlsetups xml:styled-content
+	{
+	\xmldoif {#1} {.[@style]}{\xmlvalue{style}{\xmlatt{#1}{style}}{not found}}
+	\xmlfilter{#1}{.[@xml:lang]/command(xml:language)}
+	\xmlflush{#1}
+	}
+\stopxmlsetups
+
+
+% Links
+
+% \startxmlsetups xml:ext-link
+    % \begingroup
+        % \expandUx
+% \expanded{\goto{\hyphenatedurl{\xmlflush{#1}}}[url(\xmlflush{#1})]}
+    % \endgroup
+% \stopxmlsetups 
+
+% \startxmlsetups xml:ext-link
+% \goto{\hyphenatedurl{\xmlflush{#1}}}[url(\xmlpure{#1})]
+% \stopxmlsetups 
+
+\startxmlsetups xml:ext-link
+\goto{\hyphenatedurl{\xmlflush{#1}}}[url(\xmlflushpure{#1})]
+\stopxmlsetups
+
+%Thought Break
+\usemodule[fancybreak]
+\setupfancybreak[
+	symbol=star,
+	spacebefore=halfline,
+	spaceafter=halfline,
+	indentnext=no]
+
+\startxmlsetups xml:thought-break
+  \blank\noindentation
+  \xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:thought-break-asterism
+  \fancybreak
+  \xmlflush{#1}
+\stopxmlsetups
+
+% Gliederungselemente
+\startxmlsetups xml:sec
+	\startstructurelevel [title=\xmlfilter{#1}{/title/command(xml:sec:title)}]
+	 \xmlflush{#1}
+	\stopstructurelevel
+\stopxmlsetups
+
+\startxmlsetups xml:sec-nonum
+	\startstructurelevel [title=\xmlfilter{#1}{/title/command(xml:sec:title)},number=no]
+	 \xmlflush{#1}
+	\stopstructurelevel
+\stopxmlsetups
+
+\startxmlsetups xml:sec:title
+	\xmlflush{#1}
+\stopxmlsetups
+
+% Fussnoten
+% Wir verwenden die Lösung aus dem Handbuch (XML Mkiv) S. 86f.
+
+\startluacode
+userdata.notes = {}
+\stopluacode
+
+\startxmlsetups xml:collectnotes
+\ctxlua{userdata.notes['\xmlatt{#1}{id}'] = '#1'}
+\stopxmlsetups
+
+\startxmlsetups xml:footnote
+\footnote
+{\xmlflush
+{\cldcontext{userdata.notes['\xmlatt{#1}{rid}']}}}
+\stopxmlsetups
+
+
+\xmlmapvalue{dispquotestartvar}{direction: rtl}{\startrtlblockquote}
+\xmlmapvalue{dispquotestopvar}{direction: rtl}{\stoptrtlblockquote}
+\xmlmapvalue{dispquotestopvar}{direction: ltr}{\startblockquote}
+\xmlmapvalue{dispquotestopvar}{direction: ltr}{\stopblockquote}
+
+
+% Eingerückte Zitate
+% \startxmlsetups xml:disp-quote
+	% \startblockquote
+	% \xmlflush{#1}
+	% \stopblockquote
+% \stopxmlsetups
+
+\startxmlsetups xml:disp-quote
+	\xmldoifelse {#1} {.[@style="direction: rtl"]} {
+		\startrtlblockquote
+		\xmlflush{#1}
+		\stoprtlblockquote
+	}
+	{
+		\startblockquote
+		\xmlflush{#1}
+		\stopblockquote
+	}	
+\stopxmlsetups
+
+% Itemize
+\startxmlsetups xml:itemize
+	\startitemize
+		\xmlfilter{#1}{/list-item/command(xml:itemize:list-item)}
+	\stopitemize
+\stopxmlsetups
+
+\startxmlsetups xml:enumerate
+	\startitemize[n]
+		\xmlfilter{#1}{/list-item/command(xml:itemize:list-item)}
+	\stopitemize
+\stopxmlsetups
+
+\startxmlsetups xml:alphalist
+	\startitemize[a][stopper={)}]
+		\xmlfilter{#1}{/list-item/command(xml:itemize:list-item)}
+	\stopitemize
+\stopxmlsetups
+
+\startxmlsetups xml:alphalist-uppercase
+	\startitemize[A][stopper={.}]
+		\xmlfilter{#1}{/list-item/command(xml:itemize:list-item)}
+	\stopitemize
+\stopxmlsetups
+
+\startxmlsetups xml:itemize:list-item
+	\startitem
+		\xmlflush{#1}
+	\stopitem
+\stopxmlsetups
+
+% description lists
+
+\startxmlsetups xml:def-list
+	\xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:def-list:title
+	\xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:def-list:term-head
+	\xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:def-list:def-head
+	\xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:def-list:def-item
+	\xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:def-list:def-item:term
+	\startdeflist{\xmlflush{#1}}
+\stopxmlsetups
+
+\startxmlsetups xml:def-list:def-item:def
+	\xmlflush{#1}
+	\stopdeflist
+\stopxmlsetups
+
+\definedescription[deflistold][
+  headstyle=normal, 
+  style=normal, 
+  alternative=hanging,
+  %hang=margin,
+  width=fit, 
+  %right={--},
+  margin=1cm,
+  distance=0em,
+  ]
+  
+\definedescription
+  [deflist]
+  [alternative=serried,
+   %hang=margin,
+   width=fit,
+   headstyle=normal, 
+   style=normal, 
+   headcommand=\groupedcommand{}{:},
+   distance=.5em,
+   margin=1cm,
+   indentnext=no,
+   ]
+   
+\definedescription
+  [deflisttop]
+  [alternative=top,
+   width=fit,
+   distance=1em,
+   margin=1.5em,
+   headstyle=normal,
+   inbetween={\blank[small]},
+   headcommand=\groupedcommand{}{:},
+   indentnext=no]
+
+
+% Verse-group
+
+\startxmlsetups xml:verse-group-wrapper
+	\startverse
+		\xmlflush{#1}
+	\stopverse
+\stopxmlsetups
+
+\startxmlsetups xml:verse-group-wrapper-centered
+	\startcenteredverse
+		\xmlflush{#1}
+	\stopcenteredverse
+\stopxmlsetups
+
+\startxmlsetups xml:verse-group-stanza
+	\xmlflush{#1}\blank[preference,standard]
+\stopxmlsetups
+
+\startxmlsetups xml:verse-line
+	\xmlflush{#1}\blank[none]
+\stopxmlsetups
+
+\startxmlsetups xml:verse-group-stanza:attrib
+	\blank[force,quarterline]{\tx \xmlflush{#1}}
+\stopxmlsetups
+
+% Paralleltexte
+
+\xmlmapvalue{colstyle}{direction: rtl}{,righttoleft}
+\xmlmapvalue{colstyle}{direction: ltr}{,lefttoright}
+
+\startxmlsetups xml:parallel-table:column-def
+	\xmlvalue{colstyle}{\xmlatt{#1}{style}}{}
+\stopxmlsetups
+
+\startxmlsetups xml:table-wrap-parallel
+\xmldoif{#1}{/caption}{
+	\paratextheading{\xmlfilter{#1}{/caption/command(xml:caption)}}}
+\xmlfilter{#1}{/table/command(xml:parallel-text)}
+\noindentation
+\stopxmlsetups
+
+\startxmlsetups xml:parallel-text
+    \startpostponingnotes
+	\starttabulate
+			[|
+			p(.48\textwidth)A{verytolerant,extremestretch\xmlfilter {#1} {/colgroup/col[position()=1]/command(xml:parallel-table:column-def)}}
+			|
+			p(.48\textwidth)A{verytolerant,extremestretch\xmlfilter {#1} {/colgroup/col[position()=2]/command(xml:parallel-table:column-def)}}
+			|]
+		\xmlfilter{#1}{/thead/command(xml:parallel-text:thead)}
+		\xmlfilter{#1}{/tbody/command(xml:parallel-text:tbody)}
+	\stoptabulate
+	\stoppostponingnotes
+\stopxmlsetups
+
+\startxmlsetups xml:table-wrap-parallel-4
+\xmldoif{#1}{/caption}{
+	\paratextheading{\xmlfilter{#1}{/caption/command(xml:caption)}}}
+\xmlfilter{#1}{/table/command(xml:parallel-text-4)}
+\noindentation
+\stopxmlsetups
+
+\startxmlsetups xml:parallel-text-4
+    \startpostponingnotes
+	\starttabulate
+			[|
+			p(.23\textwidth)A{flushleft,verytolerant,extremestretch\xmlfilter {#1} {/colgroup/col[position()=1]/command(xml:parallel-table:column-def)}}
+			|
+			p(.23\textwidth)A{flushleft,verytolerant,extremestretch\xmlfilter {#1} {/colgroup/col[position()=2]/command(xml:parallel-table:column-def)}}
+			|
+			p(.23\textwidth)A{flushleft,verytolerant,extremestretch\xmlfilter {#1} {/colgroup/col[position()=3]/command(xml:parallel-table:column-def)}}
+			|
+			p(.23\textwidth)A{flushleft,verytolerant,extremestretch\xmlfilter {#1} {/colgroup/col[position()=4]/command(xml:parallel-table:column-def)}}
+			|]
+		\xmlfilter{#1}{/thead/command(xml:parallel-text:thead)}
+		\xmlfilter{#1}{/tbody/command(xml:parallel-text:tbody)}
+	\stoptabulate
+	\stoppostponingnotes
+\stopxmlsetups
+
+\startxmlsetups xml:koltai:parallel-text-2
+	\startpostponingnotes
+	\starttabulate
+			[|
+			p(.38\textwidth)A{verytolerant,extremestretch\xmlfilter {#1} {/colgroup/col[position()=1]/command(xml:parallel-table:column-def)}}
+			|
+			p(.25\textwidth)A{verytolerant,extremestretch\xmlfilter {#1} {/colgroup/col[position()=2]/command(xml:parallel-table:column-def)}}
+			|]
+		\xmlfilter{#1}{/thead/command(xml:parallel-text:thead)}
+		\xmlfilter{#1}{/tbody/command(xml:parallel-text:tbody)}
+	\stoptabulate
+	\stoppostponingnotes
+\stopxmlsetups
+
+\startxmlsetups xml:parallel-text-r2l
+    \startpostponingnotes
+	\starttabulate[|pA{righttoleft,verytolerant,extremestretch}|pA{verytolerant,extremestretch}|]
+		%\xmlfilter{#1}{/tr/command(xml:parallel-text:tr)}
+		\xmlfilter{#1}{/thead/command(xml:parallel-text:thead)}
+		\xmlfilter{#1}{/tbody/command(xml:parallel-text:tbody)}
+	\stoptabulate
+	\stoppostponingnotes
+\stopxmlsetups
+
+\startxmlsetups xml:parallel-text:tr
+	\xmlfilter{#1}{/th/command(xml:parallel-text:tr:th)}
+	\xmlfilter{#1}{/td/command(xml:parallel-text:tr:td)}
+	\NC\NR
+\stopxmlsetups
+
+\startxmlsetups xml:parallel-text:tr:th
+	\NC \xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:parallel-text:tr:td
+	\NC \xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:parallel-text:thead:tr:th
+	\NC \xmlflush{#1}
+\stopxmlsetups
+
+
+\startxmlsetups xml:parallel-text:thead
+	\xmlfilter{#1}{/tr/command(xml:parallel-text:thead:tr)}
+\stopxmlsetups
+
+\startxmlsetups xml:parallel-text:thead:tr
+	\xmlfilter{#1}{/th/command(xml:parallel-text:thead:tr:th)}\NC\NR
+\stopxmlsetups
+
+\startxmlsetups xml:parallel-text:thead:tr:th
+	\NC \xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:parallel-text:tbody
+	\xmlfilter{#1}{/tr/command(xml:parallel-text:tbody:tr)}
+\stopxmlsetups
+
+\startxmlsetups xml:parallel-text:tbody:tr
+	\xmlfilter{#1}{/td/command(xml:parallel-text:tbody:tr:td)}\NC\NR
+\stopxmlsetups
+
+\startxmlsetups xml:parallel-text:tbody:tr:td
+	\NC \xmlflush{#1}
+\stopxmlsetups
+
+
+
+% Parallel Verse
+\defineparagraphs[paraverse]
+				 [n=2,
+				 %after={\noindentation},
+				 distance=2em,
+				 ]
+				 
+\setupparagraphs[paraverse][1][
+   width=.45\textwidth,
+   %distance=4em,
+   align={verytolerant,stretch}]
+   
+\setupparagraphs[paraverse][2][
+   %distance=4em,
+   align={verytolerant,stretch}]
+% width of 2nd column is calculated automatically
+
+\startxmlsetups xml:parallel-verse
+	\startparaverse
+	%\xmlfirst{#1}{verse-group}
+	\xmlfilter{#1}{/table-wrap/table/tbody/tr/td[position()=1]/command(xml:parallel-verse:col)}
+	\paraverse
+	%\nextparaverse
+	%\xmllast{#1}{verse-group}
+	 \xmlfilter{#1}{/table-wrap/table/tbody/tr/td[position()=2]/command(xml:parallel-verse:col)}
+	\stopparaverse
+\stopxmlsetups
+
+\startxmlsetups xml:parallel-verse:col
+	\xmlflush{#1}
+\stopxmlsetups
+
+% Tabellen
+
+% \startxmlsetups xml:table-wrap
+    % \xmldoif {#1} {.[@position="float"]}
+	% {\startplacetable[location={split,none}]
+	  % \begingroup
+	% %\startalignment[middle]
+	  % \blank[medium]\noindentation\placefloatcaption[table][title=\xmlfilter{#1}{/caption/command(xml:caption)}]
+	% %\stopalignment
+	% \endgroup
+	% }
+	  % \startpostponingnotes
+	    % \xmlflush{#1}
+	  % \stoppostponingnotes
+    % \xmldoif {#1} {.[@position="float"]}
+    % {\stopplacetable}
+% \stopxmlsetups
+
+\startxmlsetups xml:table-wrap
+    \xmldoif {#1} {.[@position="float"]}
+	{\startplacetable[location={split},title=\xmlfilter{#1}{/caption/command(xml:caption)}]}
+	  \startpostponingnotes
+	    \xmlflush{#1}
+	  \stoppostponingnotes
+    \xmldoif {#1} {.[@position="float"]}
+    {\stopplacetable}
+\stopxmlsetups
+
+% \startxmlsetups xml:table-wrap
+% \startlocalfootnotes
+% \placetable
+    % %The caption
+    % {\xmlfilter{#1}{/caption/command(xml:caption)}}
+    % %the table
+    % \placelegend
+        % {\xmlflush{#1}}
+        % %the footnotes
+        % {\placelocalfootnotes}
+% \stoplocalfootnotes
+% \stopxmlsetups
+
+
+\xmlmapvalue{colgroupalign}{direction: rtl}{align=righttoleft}
+\xmlmapvalue{colgroupalign}{direction: ltr}{align=lefttoright}
+
+% \xmlmapvalue{colgroupalign}{direction: rtl}{righttoleft}
+% \xmlmapvalue{colgroupalign}{direction: ltr}{lefttoright}
+
+\startxmlsetups xml:table:colgroup
+	\xmlfilter {#1} {/col/command(xml:table:colgroup:col)}
+\stopxmlsetups
+
+\startxmlsetups xml:table:colgroup:col
+     \normalexpanded {
+         \setupTABLE
+         [c]
+         [\xmlmatch {#1}]
+         [\xmlvalue{colgroupalign}{\xmlatt{#1}{style}}{align={lefttoright,flushleft,verytolerant,extremestretch}},% align
+		 ]
+     }
+\stopxmlsetups
+
+\startxmlsetups xml:table
+  \start
+  \xmlfilter {#1} {/colgroup/command(xml:table:colgroup)}
+  \bTABLE 
+	[
+	setups={table-teststyle},
+	%offset=2mm,
+	%spaceinbetween=5cm,
+	%distance=1cm,
+	]
+	\xmlfilter{#1}{/thead/command(xml:table:thead)}
+	\xmlfilter{#1}{/tbody/command(xml:table:tbody)}
+  \eTABLE
+  \stop
+\stopxmlsetups
+
+\startxmlsetups xml:table:thead
+	\bTABLEhead
+		\xmlfilter{#1}{/tr/command(xml:table:thead:tr)}
+	\eTABLEhead
+\stopxmlsetups
+
+\startxmlsetups xml:table:thead:tr
+	\bTR
+		\xmlfilter{#1}{/th/command(xml:table:thead:tr:th)}
+	\eTR
+\stopxmlsetups
+
+\startxmlsetups xml:table:thead:tr:th
+	\bTH
+		\xmlflush{#1}
+	\eTH
+\stopxmlsetups
+
+\startxmlsetups xml:table:tbody 
+\bTABLEbody\xmlfilter{#1}{/tr/command(xml:table:tbody:tr)}\eTABLEbody
+\stopxmlsetups
+
+\startxmlsetups xml:table:tbody:tr
+\bTR\xmlfilter{#1}{/td/command(xml:table:tbody:tr:td)}\eTR
+\stopxmlsetups
+
+
+\startxmlsetups xml:table:tbody:tr:td
+	\normalexpanded {
+		\bTD [\xmlvalue{colgroupalign}{\xmlatt{#1}{style}}{}]
+			\xmlflush{#1} 
+		\eTD
+	}
+\stopxmlsetups
+
+% Zitatnachweise
+\startxmlsetups xml:citeref
+	\xmlflush{#1}
+\stopxmlsetups
+
+% Bibliografie
+
+\startxmlsetups xml:ref-list-wrapper
+	\startstructurelevel [title={\xmlfilter{#1}{/title/command(xml:ref-list:title)}},number=no]
+	 \xmlflush{#1}
+ 	\stopstructurelevel
+\stopxmlsetups
+
+\startxmlsetups xml:ref-list
+	\startreferencelist
+	\startstructurelevel [title={\xmlfilter{#1}{/title/command(xml:ref-list:title)}},number=no]
+	 \xmlflush{#1}
+ 	\stopstructurelevel
+	\stopreferencelist
+\stopxmlsetups
+
+\startxmlsetups xml:ref-list:title
+	\xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:ref
+	\xmlflush{#1}
+\stopxmlsetups 
+
+\startxmlsetups xml:mixed-citation
+	\xmlflush{#1}\par
+\stopxmlsetups 
+
+% Siglen
+\startxmlsetups xml:list-of-shorthands
+	\startstructurelevel [title={\xmlfilter{#1}{/title/command(xml:ref-list:title)}},number=no]
+		\starttabulate[|p(.15\textwidth)|pA{verytolerant,extremestretch}|] % TODO: LAYOUT prüfen!
+			\xmlflush{#1}
+		\stoptabulate
+	\stopstructurelevel
+\stoptabulate
+\stopxmlsetups
+
+\startxmlsetups xml:shorthand
+  \xmlfilter{#1}{/label/command(xml:shorthand:label)} 
+  \xmlfilter{#1}{/mixed-citation/command(xml:shorthand:content)} 
+  \NC\NR
+\stopxmlsetups
+
+\startxmlsetups xml:shorthand:label
+  \NC \xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:shorthand:content
+  \NC \xmlflush{#1}
+\stopxmlsetups
+
+%\starttabulate[|rw(.25\textwidth)|lw(.75\textwidth)|] -> noch anpassen
+
+% \starttabulate[|p(.1\textwidth)|p(.75\textwidth)|]
+% \NC ND \NC Adorno, Negative Dialektik \NC\NR
+% \NC label \NC mixed citation \NC\NR
+% \stoptabulate
+
+% siehe oben:
+% \startxmlsetups xml:parallel-text
+    % \startpostponingnotes
+	% \starttabulate
+			% [|
+			% pA{verytolerant,extremestretch\xmlfilter {#1} {/colgroup/col[position()=1]/command(xml:parallel-table:column-def)}}
+			% |
+			% pA{verytolerant,extremestretch\xmlfilter {#1} {/colgroup/col[position()=2]/command(xml:parallel-table:column-def)}}
+			% |]
+		% \xmlfilter{#1}{/thead/command(xml:parallel-text:thead)}
+		% \xmlfilter{#1}{/tbody/command(xml:parallel-text:tbody)}
+	% \stoptabulate
+	% \stoppostponingnotes
+% \stopxmlsetups
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Koltai Hacks
+% Darstellungen
+\startxmlsetups xml:koltai-figure
+	%\startpostponingnotes
+    \startplacefigure[title=\xmlfilter{#1}{/caption/command(xml:caption)},location={page}]
+	  \xmlflush{#1}
+    \stopplacefigure
+	%\stoppostponingnotes
+\stopxmlsetups
+
+\startxmlsetups xml:koltai-figure-table
+	\start
+	\startpostponingnotes
+	\setupcaption
+	  [table]
+	  [
+	   headstyle=smallcaps,
+	   numberstopper={:},
+	   suffix=,
+	   prefix=yes,
+	   number=yes,
+	   distance=0em,
+	   %way=bysection,
+	   %prefixsegments=section,
+	   %align=right,
+	   location=bottom]
+    \startplacefigure[title=\xmlfilter{#1}{/caption/command(xml:caption)},location={force,split}]
+	  \xmlflush{#1}
+    \stopplacefigure
+	\stoppostponingnotes
+	\stop
+
+\stopxmlsetups
+
+\startxmlsetups xml:koltai-figure:boxed-text
+	\startalignment[center]
+	  \xmlflush{#1}
+	\stopalignment
+\stopxmlsetups
+
+% \startplacetable[number=no,location={force,split}]
+% \startxtable
+	% [
+	% frame=off,
+	% width=.3\textwidth,
+	% ]
+                  % \startxrow
+                     % \startxcell In Israel\stopxcell
+                     % \startxcell[loffset=10pt] when\stopxcell
+                  % \stopxrow
+% \stopxtable
+% \stopplacetable
+
+\definehspace[twoem][2 em]
+
+\startxmlsetups xml:koltai:parallel
+    \startembeddedxtable[frame=off,width=.3\textwidth,offset=0pt,split=yes]
+	  \xmlfilter{#1}{/tbody/command(xml:koltai:parallel:tbody)}
+	\stopembeddedxtable
+\stopxmlsetups
+
+% \startxmlsetups xml:koltai:parallel
+    % \bTABLE[frame=off,width=.3\textwidth]
+	  % \xmlfilter{#1}{/tbody/command(xml:table:tbody)}
+	% \eTABLE
+% \stopxmlsetups
+
+\startxmlsetups xml:koltai:parallel:tbody
+	\xmlfilter{#1}{/tr/command(xml:koltai:parallel:tbody:tr)}
+\stopxmlsetups
+
+\startxmlsetups xml:koltai:parallel:tbody:tr
+	\startxrow 
+	  \xmlfilter{#1}{/td/command(xml:koltai:parallel:tbody:tr:td)} 
+	\stopxrow
+\stopxmlsetups
+
+
+\startxmlsetups xml:koltai:parallel:tbody:tr:td
+\doifnumberelse
+	{\xmlatt{#1}{colspan}}
+	{\startxcell [nx=\xmlatt{#1}{colspan},align=middle] \xmlflush{#1} \stopxcell}
+	{\startxcell \xmlflush{#1} \stopxcell}
+\stopxmlsetups
+
+

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="de" article-type="research-article">
+  <front>
+    <article-meta>
+      <title-group>
+        <article-title>Figuren-Test</article-title>
+      </title-group>
+    </article-meta>
+  </front>
+  <body>
+    <sec>
+      <title>Einleitung</title>
+      <p>Normale Figur mit Label.</p>
+      <fig id="fig1">
+        <caption><p>Caption Fig 1</p></caption>
+        <graphic mimetype="image" mime-subtype="jpeg" xlink:href="fig1.jpg"/>
+      </fig>
+      <p>Nolabel-Figur: graphic uebernimmt die Caption.</p>
+      <fig fig-type="nolabel" id="fig2">
+        <caption><p>Caption nolabel</p></caption>
+        <graphic mimetype="image" mime-subtype="jpeg" xlink:href="fig2.jpg"/>
+      </fig>
+      <p>Figure-Group mit zwei inneren Figuren.</p>
+      <boxed-text content-type="fig-group">
+        <fig id="fig3a">
+          <caption><p>Caption 3a</p></caption>
+          <graphic mimetype="image" mime-subtype="jpeg" xlink:href="fig3a.jpg"/>
+        </fig>
+        <fig id="fig3b">
+          <caption><p>Caption 3b</p></caption>
+          <graphic mimetype="image" mime-subtype="jpeg" xlink:href="fig3b.jpg"/>
+        </fig>
+      </boxed-text>
+    </sec>
+  </body>
+</article>

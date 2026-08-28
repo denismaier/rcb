@@ -1,0 +1,42 @@
+\startenvironment *
+
+% Hauptspreche laden
+
+% Hyphenation Patterns laden
+% Mix verschiedener Schriftsysteme geht 
+% => man muss im Text keine Sprachumschaltung machen!
+% siehe Mailing List, 17.1.2020: Luatex and Hyphenation
+
+% Falsche Ligaturen werden im Goodies File unterdrückt
+
+\startlanguageoptions[de]
+Fünf|jährige
+Fünf|jähriger
+\stoplanguageoptions
+
+\setuplanguage[de][
+	patterns={de,agr,he},
+	goodies={lang-de.llg},
+	lefthyphenmin=2,
+	righthyphenmin=3,
+	hyphenmin=6] 
+\setuplanguage[en][patterns={en,agr,he},goodies={lang-en.llg},spacing=packed] 
+\setuplanguage[fr][patterns={fr,agr,he}]
+
+\mainlanguage[de]
+
+
+
+% Korrekturen der Trennmuster
+\startexceptions[de]
+Burck-hardt
+\stopexceptions
+
+\startexceptions[en]
+ap-pli-ca-ble
+ob-li-gated
+Auf-ent-halts-wor-te
+Auf-ent-halts-wort
+\stopexceptions
+
+\stopenvironment

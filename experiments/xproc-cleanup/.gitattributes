@@ -1,0 +1,6 @@
+# Sandbox line-endings (core.autocrlf=true wuerde sonst CRLF auschecken).
+# expected/-Baselines als LF, damit fc /b (binär) gegen den LF-Output von
+# Morgana passt — sonst scheitert der Vergleich rein an CRLF-vs-LF.
+# tests.bat muss CRLF bleiben (DOS-batch; s. CRLF-Falle in Memory).
+expected/*.xml text eol=lf
+tests.bat text eol=crlf

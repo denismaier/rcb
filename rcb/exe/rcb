@@ -1,0 +1,50 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "rcb"
+require "optparse"
+
+# Parse options
+options = {
+  debug: false,
+  yes: false
+}
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: rcb [options] [task]\n\nRCB - Ruby Cascade Build System (v#{RCB::VERSION})\n"
+
+  opts.on("-d", "--debug", "Enable debug mode") do
+    options[:debug] = true
+  end
+
+  opts.on("-y", "--yes", "Auto-apply prompts") do
+    options[:yes] = true
+  end
+
+  opts.on("--version", "Show version") do
+    puts RCB::VERSION
+    exit
+  end
+
+  opts.on("-h", "--help", "Show this help") do
+    puts opts
+    exit
+  end
+end.parse!
+
+# Run RCB
+begin
+  RCB.run(options, ARGV)
+rescue RCB::Error => e
+  $stderr.puts "\n⚠️  Error: #{e.message}"
+  $stderr.puts e.backtrace.join("\n") if options[:debug]
+  exit 1
+rescue StandardError => e
+  $stderr.puts "\n⚠️  Error: #{e.message}"
+  if options[:debug]
+    $stderr.puts e.backtrace.join("\n")
+  else
+    $stderr.puts "   (Run with --debug for more details)"
+  end
+  exit 1
+end

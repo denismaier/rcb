@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xml:lang="de" article-type="research-article">
+  <front>
+    <article-meta>
+      <title-group>
+        <article-title>Tabellen-Test</article-title>
+      </title-group>
+    </article-meta>
+  </front>
+  <body>
+    <sec>
+      <title>Tabellen</title>
+      <p>Labeled Table:</p>
+      <boxed-text content-type="labeled">
+        <table-wrap id="t1">
+          <caption>
+            <p>Caption T1</p>
+          </caption>
+          <table>
+            <tbody>
+              <tr>
+                <td>a</td>
+                <td>b</td>
+              </tr>
+            </tbody>
+          </table>
+        </table-wrap>
+      </boxed-text>
+      <p>Floating Table:</p>
+      <boxed-text position="float" id="bt2">
+        <table-wrap id="t2">
+          <caption>
+            <p>Caption T2</p>
+          </caption>
+          <table>
+            <tbody>
+              <tr>
+                <td>c</td>
+                <td>d</td>
+              </tr>
+            </tbody>
+          </table>
+        </table-wrap>
+      </boxed-text>
+      <p>Noch eine labeled Table fuer Nummerierung.</p>
+      <boxed-text content-type="labeled">
+        <table-wrap id="t3">
+          <table>
+            <tbody>
+              <tr>
+                <td>e</td>
+              </tr>
+            </tbody>
+          </table>
+        </table-wrap>
+      </boxed-text>
+    </sec>
+  </body>
+</article>

@@ -1,0 +1,26 @@
+\startenvironment *
+
+\definestartstop
+  [abstract]
+  [before={\begingroup\noindentation\language[en]{Abstract}:\em},
+  after={\endgroup\blank[big]\blank[medium]\noindentation},
+  ]
+
+\setnewconstant\kindofpagetextareas 1
+\definetextbackground[abstractbackground][
+  location=paragraph,
+  background=color,
+  backgroundcolor=gray,
+  corner=round,
+  %ftoffset=\bodyfontsize,
+  leftoffset=.5\bodyfontsize,
+  rightoffset=.5\bodyfontsize,
+  topoffset=.5\bodyfontsize,
+  bottomoffset=.5\bodyfontsize,
+  before={\noindentation\language[en]},
+  after=\blank\noindentation,
+  frame=on,
+  framecolor=gray,
+  ]
+
+\stopenvironment

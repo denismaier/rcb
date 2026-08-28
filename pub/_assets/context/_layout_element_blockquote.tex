@@ -1,0 +1,36 @@
+\startenvironment *
+
+\definedelimitedtext[delimitedtextbase]
+	[
+	indentnext=no,
+	indenting=yes,
+	spacebefore=line,
+	spaceafter={back,line},
+	]
+
+\definedelimitedtext
+	[blockquote]
+	[delimitedtextbase]
+	[
+	leftmargin=1.5\parindent,
+	rightmargin=0em,
+	]
+				
+\definedelimitedtext
+	[rtlblockquote]
+	[blockquote]
+	[
+	leftmargin=0em,
+	rightmargin=1.5\parindent,
+	before={\righttoleft},
+	]
+	
+\definedelimitedtext
+	[blockquotenoindenting]
+	[blockquote]
+	[
+	before={\setupindenting[none]%
+	\setupwhitespace[small]},
+	]
+
+\stopenvironment

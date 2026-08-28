@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xml:lang="de" article-type="research-article">
+  <front>
+    <article-meta>
+      <title-group>
+        <article-title>Back-Moves-Test</article-title>
+      </title-group>
+    </article-meta>
+  </front>
+  <body>
+    <sec>
+      <title>Einleitung</title>
+      <p>Ein normaler Abschnitt, der im Body bleibt.</p>
+    </sec>
+    <sec sec-type="ref-list">
+      <p>Smith 2020: Ein Titel.</p>
+      <p>Jones 2021: Ein anderer Titel.</p>
+    </sec>
+    <sec sec-type="app-appendix">
+      <title>Anhang A</title>
+      <p>Anhangsinhalt.</p>
+    </sec>
+  </body>
+  <back>
+    <fn-group>
+      <fn id="fn1">
+        <label>1</label>
+        <p>Eine Fussnote.</p>
+      </fn>
+    </fn-group>
+  </back>
+</article>

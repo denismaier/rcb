@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xml:lang="de" article-type="research-article">
+  <front>
+    <article-meta>
+      <title-group>
+        <article-title>Blocks-Test</article-title>
+      </title-group>
+    </article-meta>
+  </front>
+  <body>
+    <sec>
+      <title>Bloecke</title>
+      <p>Blockquote no-indenting:</p>
+      <boxed-text content-type="blockquotenoindenting">
+        <disp-quote>
+          <p>Ein Zitat ohne Erstzeileneinzug.</p>
+        </disp-quote>
+      </boxed-text>
+      <p>RTL-Blockquote:</p>
+      <boxed-text content-type="rtlblockquote">
+        <disp-quote>
+          <p>Ein RTL-Zitat.</p>
+        </disp-quote>
+      </boxed-text>
+      <p>Epigraph:</p>
+      <boxed-text content-type="epigraph">
+        <p>Ein Epigraph.</p>
+      </boxed-text>
+      <p>Preformat:</p>
+      <boxed-text content-type="preformat">
+        <p>Vorformatierter Text.</p>
+      </boxed-text>
+      <p>Attrib:</p>
+      <boxed-text content-type="attrib">
+        <p>Quellenangabe.</p>
+      </boxed-text>
+    </sec>
+  </body>
+</article>

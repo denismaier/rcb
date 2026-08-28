@@ -1,0 +1,33 @@
+\startenvironment *
+
+\definestructurelevels [default] [section,subsection,subsubsection]
+
+\setuphead
+    [section, subsection, subsubsection, 
+    subsubsubsection, subsubsubsubsection]
+    [number=yes]
+	
+\startmode[nonumheadings]
+\setuphead
+    [section, subsection, subsubsection, 
+    subsubsubsection, subsubsubsubsection]
+    [number=no]
+\stopmode
+
+\setuphead
+    [section]
+    [
+	style={\switchtobodyfont[12pt]},
+	%textstyle=\em,
+	]
+	
+\definehead[paratextheading][subsubsubsubject]
+\setuphead
+    [paratextheading]
+    [
+	style={\switchtobodyfont[11pt]},
+	%textstyle=\em,
+	align=middle,
+	]
+
+\stopenvironment

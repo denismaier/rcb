@@ -1,0 +1,72 @@
+\startenvironment *
+
+% BIDI
+\setupdirections[bidi=global,method=unicode]
+
+% Kursivkorrektur
+\setupitaliccorrection[global, always]
+
+% Em => Kursiv (statt slanted)
+\setupbodyfontenvironment[default][em=italic]
+
+% Keine hängende Punktuation links:
+\setupfontprotrusion [quality] [left=0,right=0.5] 
+
+% Defaults
+\definefontfeature[default][default][
+	script=latn, 
+	protrusion=quality, 
+	expansion=quality, 
+	itlc=yes, 
+	textitalics=yes, 
+	onum=yes, 
+	pnum=yes,
+	blockligatures=yes,
+	compose=yes,	
+	]
+
+% Smallcaps
+\definefontfeature[smallcaps][
+	script=latn, 
+	protrusion=quality, 
+	expansion=quality, 
+	smcp=yes, 
+	onum=yes, 
+	pnum=yes,
+	compose=yes,
+	]
+
+% Superior-Figures (notwendig bei Cardo), sonst superiors schon so.
+\definefontfeature[f:superiors][onum=no,pnum=no,sups=yes]
+
+% Oldstyle-Numbers feature (wichtig, 
+\definefontfeature[f:oldstylenumbers][onum=yes]
+
+% Schriftarten
+
+\definefontfamily[hebrew][rm][SBL Hebrew][features=hebrew]
+
+\definefallbackfamily[mainface][rm][SBL Greek]  [preset=range:greek, force=yes]
+\definefallbackfamily[mainface][rm][SBL Hebrew] [range=hebrew, force=yes, features=hebrew]
+%\definefallbackfamily[mainface][rm][Amiri] [range=arabic, force=yes, features=arabic,scale=.8]
+\definefallbackfamily[mainface][rm][Scheherazade] [range=arabic, force=yes, features=arabic, scale=1.2]
+
+\definefallbackfamily[mainface][rm][Gentium] [range={cyrillic,cyrillicextendeda,cyrillicextendedb,cyrillicsupplement}, force=yes]
+
+\definefallbackfamily[mainface][rm][Segoe UI Symbol][range=0x00000-0xFFFFF, check=yes,force=no,scale=0.85]
+
+\definefontfamily[mainface][rm][Cardo]
+\definefontfamily[mainface][mm][Latin Modern Math]
+\definefontfamily[mainface][ss][Myriad Pro]
+\definefontfamily[mainface][tt][DejaVu Sans Mono][features=none,scale=0.8]
+
+\setupbodyfont[
+    mainface,
+    11pt,
+    ]
+	
+% Symbole
+
+\usesymbols[cc]
+
+\stopenvironment

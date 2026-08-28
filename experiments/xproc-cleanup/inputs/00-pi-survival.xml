@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xml:lang="de" article-type="research-article">
+  <?custom-pi article-level?>
+  <front>
+    <article-meta>
+      <title-group>
+        <article-title>PI-Survival-Test</article-title>
+      </title-group>
+    </article-meta>
+  </front>
+  <body>
+    <sec>
+      <title>PIs</title>
+      <?pagebreak?>
+      <p>Text mit <?inline-pi mid?> PI darin.</p>
+      <p>Noch ein Absatz.</p>
+    </sec>
+  </body>
+</article>

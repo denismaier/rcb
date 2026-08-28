@@ -1,0 +1,51 @@
+\startenvironment *
+
+
+\setupxtable	[frame=off,split=yes]
+\setupxtable	[head]	[topframe=on,bottomframe=on]
+\setupxtable	[body]	[bottomframe=on]
+\setupxtable	[foot]	[bottomframe=on]
+
+
+\setupTABLE [split=yes]
+
+\startsetups booktabs
+  \setupTABLE	[each]	[each]	[frame=off]
+  \setupTABLE	[row]	[first]	[topframe=on,rulethickness=1.2bp]
+  \setupTABLE	[row]	[2]    	[topframe=on,rulethickness=0.6bp]
+  \setupTABLE	[row]	[last] 	[bottomframe=on, rulethickness=1.2bp]
+  \setupTABLE	[row]	[first]	[style=bold]
+\stopsetups 
+
+
+\startsetups style
+  \setupTABLE [split=repeat]
+  \setupTABLE [each]	[each]	[frame=off]
+  %\setupTABLE [row]		[even]	[backgroundcolor=gray,background=color]
+  \setupTABLE [row]		[first] [topframe=on,framecolor=darkgray]
+  \setupTABLE [header] [
+	foregroundcolor=white,
+	background=color,
+	backgroundcolor=darkgray,
+	headstyle=normal]
+  \setupTABLE [row]		[last] [bottomframe=on,framecolor=darkgray]
+\stopsetups 
+
+\startsetups table-teststyle
+  \setupTABLE [split=repeat]
+  \setupTABLE [each]	[each]	[frame=off]
+  \setupTABLE [row]	[even]	[backgroundcolor=lightgray,background=color]
+  %\setupTABLE [row]		[each] [topframe=on,framecolor=lightgray]
+  \setupTABLE [row]		[first] [topframe=on,framecolor=darkgray]
+  \setupTABLE [header] [
+	foregroundcolor=white,
+	background=color,
+	backgroundcolor=darkgray,
+	headstyle=normal]
+  \setupTABLE [row]		[last] [bottomframe=on,framecolor=darkgray]
+\stopsetups
+
+% um Tabellen luftiger zu machen => start nötig, sonst funktioniert der Parameter nicht
+%\setupTABLE [start] [spaceinbetween=25pt] 
+
+\stopenvironment

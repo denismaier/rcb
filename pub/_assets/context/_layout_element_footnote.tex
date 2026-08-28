@@ -1,0 +1,22 @@
+\startenvironment *
+
+\setupnote
+  [footnote]
+  [textstyle={\switchtobodyfont[mainface]\tf\feature[+][f:superiors]},
+   textcommand=,
+   align=l2r,
+   split=tolerant,
+   %rule=off,
+   ]
+
+\setupnotation
+  [footnote] 
+  [
+  way=bychapter,
+  headstyle={\feature[+][f:superiors]},
+  % headstyle={\feature[-]{f:oldstylenumbers}},
+  numbercommand=,
+  align={verytolerant,stretch,hz,hanging},
+  ]
+
+  \stopenvironment

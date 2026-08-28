@@ -1,0 +1,35 @@
+\startenvironment *
+
+
+% Seitenzahlen / Kopf-/Fusszeilen
+\setuppagenumbering [
+	%alternative=doublesided,
+	location={footer,center},
+	]
+
+% Some Examples for headers/footers
+\startsetups[footerjournalinfos-ver1]
+	\startframed[
+		frame=off,
+		align=middle,
+		width=10cm,
+		location=top]
+		{\sc Judaica: Neue digitale Folge} \documentvariable{volume} (\documentvariable{pub-year})\\
+		\documentvariable{doi}\\ 
+		{\sc \cc by} 4.0
+	\stopframed
+\stopsetups
+
+\startsetups[footerjournalinfos-ver2]
+		{\sc jndf} \documentvariable{volume} (\documentvariable{pub-year})
+		\hfill
+		\documentvariable{doi}
+		\hfill
+		{\sc \symbol[cc][cc-by]} 4.0
+\stopsetups
+
+
+\definetext[chapterfooter][footer][\directsetup{footerjournalinfos-ver2}]
+
+
+\stopenvironment

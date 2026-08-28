@@ -1,0 +1,28 @@
+# Article metadata — DEMO (fiktional)
+# Article-spezifische Werte; Publisher/Journal/Volume via Cascade geerbt.
+
+_extract:
+  protect: []
+
+title: "Lorem-Rezension: Ein Musterbuch der Demo-Literatur"
+
+author:
+  - surname: Mustermann
+    given-names: Max
+    affiliation: "Mustermann-Universität, Demostadt"
+
+lang: de
+
+article:
+  type: book-review
+  doi_article_number: 1
+
+date:
+  month: 1
+
+copyright:
+  holder: "Max Mustermann"
+
+tags:
+  - Demo
+  - Lorem

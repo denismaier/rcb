@@ -1,0 +1,30 @@
+# Article-level metadata template
+# Only article-specific values belong here
+# Publisher/Journal/Volume values are inherited via cascade
+
+# Protect fields from re-extraction; add entries to pin, e.g. - title
+_extract:
+  protect: []
+
+title: "???"  # check and edit
+
+author:
+  - surname: "???"         
+    given-names: "???"     
+    affiliation: "???"     
+    email: "???"           
+
+lang: "???"  # de/en/fr/he
+
+article:
+  type: "???"  # research-article, book-review, review-essay, editorial, obituary
+
+date:
+  month: "???"  # numeric, 1-12
+
+copyright:
+  holder: "???"  # author full name(s), comma-separated
+
+tags:
+  - "???"
+  - "???"

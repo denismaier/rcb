@@ -1,0 +1,15 @@
+# Volume metadata (2026) — DEMO
+# Werte gelten für ALLE Artikel in diesem Volume
+
+# Volume-spezifische Artikel-Defaults
+article:
+  volume: 1
+
+# Datum (Jahrgang)
+date:
+  year: 2026
+
+# Copyright Statement für diesen Volume
+copyright:
+  year: 2026
+  statement: 'Copyright 2026, the author. This work is licensed under Creative Commons Attribution 4.0 International.'

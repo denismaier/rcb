@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.2 20190208//EN" "JATS-publishing1.dtd">
+<article xml:lang="de"
+         article-type="research-article">
+   <front>
+      <article-meta>
+         <title-group>
+            <article-title>Verse-Test</article-title>
+         </title-group>
+      </article-meta>
+   </front>
+   <body>
+      <sec>
+         <label>1</label>
+         <title>Verse</title>
+         <p>Vers:</p>
+         <verse-group content-type="verse-group-wrapper">
+            <verse-group content-type="stanza">
+               <verse-line>Zeile eins</verse-line>
+               <verse-line>Zeile zwei</verse-line>
+            </verse-group>
+         </verse-group>
+         <p>Vers mit Autorenangabe (verse-line + attrib):</p>
+         <verse-group content-type="verse-group-wrapper">
+            <verse-group content-type="stanza">
+               <attrib>Zeile mit Autor
+            Verfasser
+          </attrib>
+            </verse-group>
+         </verse-group>
+         <p>Verse-centered:</p>
+         <verse-group content-type="verse-group-wrapper-centered">
+            <verse-group content-type="stanza">
+               <verse-line>Zentriert</verse-line>
+            </verse-group>
+         </verse-group>
+         <p>Parallel-Verse:</p>
+         <boxed-text content-type="parallel-verse"
+                     position="anchor">
+            <table-wrap content-type="parallel">
+               <table>
+                  <tbody>
+                     <tr>
+                        <td>
+                           <verse-group content-type="verse-group-wrapper">
+                              <verse-group content-type="stanza">
+                                 <verse-line>Links Vers</verse-line>
+                              </verse-group>
+                           </verse-group>
+                        </td>
+                        <td>
+                           <verse-group content-type="verse-group-wrapper-centered">
+                              <verse-group content-type="stanza">
+                                 <verse-line>Rechts Vers</verse-line>
+                              </verse-group>
+                           </verse-group>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </table-wrap>
+         </boxed-text>
+      </sec>
+   </body>
+</article>

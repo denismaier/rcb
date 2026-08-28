@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xml:lang="de" article-type="research-article">
+  <front>
+    <article-meta>
+      <title-group>
+        <article-title>Sandbox-Test-Artikel</article-title>
+      </title-group>
+    </article-meta>
+  </front>
+  <body>
+    <p>Erster Absatz ohne Section, ohne boxed-text, ohne ref-list.</p>
+  </body>
+</article>

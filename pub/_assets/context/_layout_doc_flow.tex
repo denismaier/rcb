@@ -1,0 +1,239 @@
+\startenvironment *
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Labels
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setuplabeltext[de]
+	[nr=Nr.,
+	hg.={Hrsg.:}]
+
+\setuplabeltext[en]
+	[nr=no.,
+	hg.={Ed.},
+	]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Titlepage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\startsetups titlepage
+ \startstandardmakeup[top=,]
+   \startalignment[middle]
+	 \vfill
+     {\bfd JUDAICA}\crlf
+     \blank[big]
+     {\tfb Neue digitale Folge}
+	 \vfill
+	 {\tfb Band \documentvariable{volume}}
+	 \blank[big]
+	 {\tfb \documentvariable{pub-year}}
+	 \vfill \vfill \vfill
+	 {ISSN 2673-4273}
+	 \blank
+	 {bop.unibe.ch/judaica \crlf www.judaica.ch}
+	 \blank
+	 {Bern Open Publishing \crlf Universitätsbibliothek Bern}
+   \stopalignment
+ \stopstandardmakeup
+\stopsetups
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Imprint
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Autoren
+\definenamespace
+   [documentauthor] % name of internal variables
+   [type=module,
+    name=author, 
+    command=yes, % Create \defineauthor
+    style=yes, % Create \useauthorstyleandcolor 
+    setup=list, % Create \setupauthor
+    parent=documentauthor,
+  ]
+
+\def\AuthorList{}
+
+\define[1]\useauthor
+    {\edef\currentauthor{#1}%
+	{\doifemptyelse  {\authorparameter{surname}}   
+		{
+			{\useauthorstyleandcolor{style}{color}
+			\authorparameter{name}
+			}%
+		} 
+		{
+			{\useauthorstyleandcolor{style}{color}
+			\authorparameter{given-names}
+			\authorparameter{surname}}%}
+			\doiftext{\authorparameter{role}}
+			{\space(\authorparameter{role})}
+		}
+	}
+     \par
+	 \blank[small]
+     \authorparameter{affiliation}
+	 \par
+     \mono{\authorparameter{email}}
+     \blank
+     }
+	 
+\define[1]\useauthorwithoutmail
+    {\edef\currentauthor{#1}%
+	{\doifemptyelse  {\authorparameter{surname}}   
+		{
+			{\useauthorstyleandcolor{style}{color}
+			\authorparameter{name}
+			}%
+		} 
+		{
+			{\useauthorstyleandcolor{style}{color}
+			\authorparameter{given-names}
+			\authorparameter{surname}}%}
+		}
+	}
+     \par
+	 \blank[small]
+     \authorparameter{affiliation}
+	 \par
+     }
+
+\define[1]\useauthorwithcommas
+    {\edef\currentauthor{#1}%
+	{\doifemptyelse  {\authorparameter{surname}}   
+		{
+			{\useauthorstyleandcolor{style}{color}
+			\authorparameter{name}
+			}%
+		} 
+		{
+			{\useauthorstyleandcolor{style}{color}
+			\authorparameter{given-names}
+			\authorparameter{surname}}%}
+		}
+	}
+    }
+
+%Dokumentenstart
+\startsetups document:start
+  \title [title={\documentvariable{title}}]
+\stopsetups
+
+% Subtitle Rendering
+\startsetups placesubtitle
+	\doifnot{\documentvariable{subtitle}} {}
+	  {\blank[small]
+	   {\doifmodeelse{article}{\tfa}{\tf}\setupinterlinespace
+	    \documentvariable{subtitle}}\par}
+\stopsetups
+
+% Autoren platzieren
+\startsetups placeauthors
+  	%\setupnotation[footnote][numberconversion=set 2]
+	\blank
+	\startalignment[flushleft]
+	  \setupindenting[none]
+	  \setupwhitespace[none]
+	  \processcommacommand[\AuthorList]\useauthor  
+	\stopalignment
+	%\setupnotation[footnote][numberconversion=set 1]
+	\def\AuthorList{}
+	\blank[big]
+	\noindentation
+\stopsetups
+
+
+% Abstract platzieren
+\startsetups abstract
+	\doifnot{\documentvariable{abstract}} {}
+	{  
+	  %\startabstractbackground
+	  \startabstract
+		\documentvariable{abstract}
+	  \stopabstract
+	  %\stopabstractbackground
+	}
+\stopsetups
+
+\startsetups journalinfostitle
+	\startalignment[right]
+	  \setupindenting[none]
+	  \setupwhitespace[none]
+	  \switchtobodyfont[9pt]
+		{\sc Judaica: Neue digitale Folge}
+		\nobreakspace
+		\documentvariable{volume}
+		\doifnot{\documentvariable{issue}} {} 
+			{, \labeltext{nr}\narrownobreakspace\documentvariable{issue}}
+		\space
+		(\documentvariable{pub-year})
+		\doifnot{\documentvariable{issue-title}} {} 
+				{
+				  \par
+				  Special Issue:\space
+				  \emph{\documentvariable{issue-title}}
+				  \par
+				  % TODO -> Ed. / Hrsg. einbauen
+				  \labeltext{hg}
+				}
+		\par
+		{\feature[-]{f:oldstylenumbers}\goto{\documentvariable{doi}}[url(\documentvariable{doi})]
+		}
+		\par
+		\symbol[cc][cc] \symbol[cc][by] -- {\sc cc by} 4.0
+	\stopalignment
+	\blank[small]
+	\hrule
+	\blank[big]
+\stopsetups
+
+\startsetups author-comment
+	\doifnot{\documentvariable{notes}} {} 
+	  {\footnotetext[+]{\documentvariable{notes}}\resetnumber[footnote]\noindentation}
+\stopsetups
+
+
+\startmode[article]
+\setuphead [chapter][
+	%alternative=middle,
+	align={flushleft,hyphenated,lesshyphenation,verytolerant,stretch},
+	page=no,
+	indentnext=no,
+	style=\tfa\setupinterlinespace,
+	after={\directsetup{placesubtitle}\blank\directsetup{placeauthors}\directsetup{author-comment}\directsetup{abstract}},
+	%footer=chapterfooter,
+	before={\directsetup{journalinfostitle}},
+	]
+\stopmode
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\startmode[review]
+
+\setuphead [chapter][
+	alternative=left,
+	page=no,
+	indentnext=no,
+	style=normal,
+	%footer=chapterfooter,
+	before={\directsetup{journalinfostitle}},
+	after={\directsetup{placesubtitle}},
+	]
+
+\startsetups placeauthors
+	\setupwhitespace[none]
+	\setupindenting[none]
+	\blank[big]
+    \processcommacommand[\AuthorList]\useauthorwithoutmail
+	\def\AuthorList{}
+	%\blank[2*big]
+\stopsetups	
+
+	
+\startsetups document:stop
+  \directsetup{placeauthors}
+\stopsetups
+\stopmode
+
+\stopenvironment

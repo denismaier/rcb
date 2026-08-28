@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.2 20190208//EN" "JATS-publishing1.dtd">
+<article xml:lang="de"
+         article-type="research-article">
+   <front>
+      <article-meta>
+         <title-group>
+            <article-title>Parallel-Test</article-title>
+         </title-group>
+      </article-meta>
+   </front>
+   <body>
+      <sec>
+         <label>1</label>
+         <title>Parallele Texte</title>
+         <p>Parallel plain:</p>
+         <table-wrap content-type="parallel">
+            <caption>
+               <p>Par Caption</p>
+            </caption>
+            <table>
+               <colgroup>
+                  <col/>
+                  <col/>
+               </colgroup>
+               <tbody>
+                  <tr>
+                     <td>links</td>
+                     <td>rechts</td>
+                  </tr>
+               </tbody>
+            </table>
+         </table-wrap>
+         <p>Parallel left-rtl:</p>
+         <table-wrap content-type="parallel">
+            <caption>
+               <p>LR Caption</p>
+            </caption>
+            <table class="left-rtl">
+               <colgroup>
+                  <col style="dir: rtl"/>
+                  <col/>
+               </colgroup>
+               <tbody>
+                  <tr>
+                     <td>hebr</td>
+                     <td>lat</td>
+                  </tr>
+               </tbody>
+            </table>
+         </table-wrap>
+         <p>Parallel both-rtl mit leerer Caption (strip-Case):</p>
+         <table-wrap content-type="parallel">
+            <table content-type="left-rtl right-rtl">
+               <colgroup>
+                  <col style="dir: rtl"/>
+                  <col style="dir: rtl"/>
+               </colgroup>
+               <tbody>
+                  <tr>
+                     <td>hebr1</td>
+                     <td>hebr2</td>
+                  </tr>
+               </tbody>
+            </table>
+         </table-wrap>
+         <p>Righttoleft-Absatz:</p>
+         <p content-type="righttoleft">Ein RTL-Absatz.</p>
+         <p content-type="righttoleft">Noch einer.</p>
+      </sec>
+   </body>
+</article>

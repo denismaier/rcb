@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xml:lang="de" article-type="research-article">
+  <front>
+    <article-meta>
+      <title-group>
+        <article-title>Parallel-Test</article-title>
+      </title-group>
+    </article-meta>
+  </front>
+  <body>
+    <sec>
+      <title>Parallele Texte</title>
+      <p>Parallel plain:</p>
+      <boxed-text content-type="parallel">
+        <table-wrap>
+          <caption>
+            <p>Par Caption</p>
+          </caption>
+          <table>
+            <tbody>
+              <tr>
+                <td>links</td>
+                <td>rechts</td>
+              </tr>
+            </tbody>
+          </table>
+        </table-wrap>
+      </boxed-text>
+      <p>Parallel left-rtl:</p>
+      <boxed-text content-type="parallel-left-rtl">
+        <table-wrap>
+          <caption>
+            <p>LR Caption</p>
+          </caption>
+          <table>
+            <tbody>
+              <tr>
+                <td>hebr</td>
+                <td>lat</td>
+              </tr>
+            </tbody>
+          </table>
+        </table-wrap>
+      </boxed-text>
+      <p>Parallel both-rtl mit leerer Caption (strip-Case):</p>
+      <boxed-text content-type="parallel-both-rtl">
+        <table-wrap>
+          <caption/>
+          <table>
+            <tbody>
+              <tr>
+                <td>hebr1</td>
+                <td>hebr2</td>
+              </tr>
+            </tbody>
+          </table>
+        </table-wrap>
+      </boxed-text>
+      <p>Righttoleft-Absatz:</p>
+      <boxed-text content-type="righttoleft">
+        <p>Ein RTL-Absatz.</p>
+        <p>Noch einer.</p>
+      </boxed-text>
+    </sec>
+  </body>
+</article>

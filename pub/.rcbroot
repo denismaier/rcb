@@ -1,0 +1,4 @@
+# RCB cascade root configuration
+# load: List of filenames to load at each cascade level
+load:
+  - Rakefile

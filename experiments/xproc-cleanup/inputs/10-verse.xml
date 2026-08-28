@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xml:lang="de" article-type="research-article">
+  <front>
+    <article-meta>
+      <title-group>
+        <article-title>Verse-Test</article-title>
+      </title-group>
+    </article-meta>
+  </front>
+  <body>
+    <sec>
+      <title>Verse</title>
+      <p>Vers:</p>
+      <boxed-text content-type="verse">
+        <p>
+          <named-content content-type="verse-line">Zeile eins</named-content>
+          <named-content content-type="verse-line">Zeile zwei</named-content>
+        </p>
+      </boxed-text>
+      <p>Vers mit Autorenangabe (verse-line + attrib):</p>
+      <boxed-text content-type="verse">
+        <p>
+          <named-content content-type="verse-line">Zeile mit Autor
+            <named-content content-type="attrib">Verfasser</named-content>
+          </named-content>
+        </p>
+      </boxed-text>
+      <p>Verse-centered:</p>
+      <boxed-text content-type="verse-centered">
+        <p>
+          <named-content content-type="verse-line">Zentriert</named-content>
+        </p>
+      </boxed-text>
+      <p>Parallel-Verse:</p>
+      <boxed-text content-type="parallel-verse">
+        <boxed-text content-type="verse">
+          <p>
+            <named-content content-type="verse-line">Links Vers</named-content>
+          </p>
+        </boxed-text>
+        <boxed-text content-type="verse-centered">
+          <p>
+            <named-content content-type="verse-line">Rechts Vers</named-content>
+          </p>
+        </boxed-text>
+      </boxed-text>
+    </sec>
+  </body>
+</article>

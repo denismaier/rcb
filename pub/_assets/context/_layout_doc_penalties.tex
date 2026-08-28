@@ -1,0 +1,18 @@
+\startenvironment *
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Penalties
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\clubpenalty = 10000
+\widowpenalty = 10000 
+\displaywidowpenalty = 10000
+\widowpenalty = 10000
+
+\setuptolerance[verytolerant,stretch]
+\setbreakpoints[compound] % Erlaubt Umbrüche an /- und an ein paar anderen Stellen
+
+% Leere Seiten am Schluss unterdrücken
+\installpagebreakhandler{last}{}
+
+\stopenvironment

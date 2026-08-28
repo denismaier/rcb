@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.2 20190208//EN" "JATS-publishing1.dtd">
+<article xml:lang="de"
+         article-type="research-article">
+   <front>
+      <article-meta>
+         <title-group>
+            <article-title>Anchor-Default-Test</article-title>
+         </title-group>
+      </article-meta>
+   </front>
+   <body>
+      <sec>
+         <label>1</label>
+         <title>Anchor-Default</title>
+         <p>Plain boxed-text ohne @position -&gt; bekommt position="anchor":</p>
+         <boxed-text position="anchor">
+            <p>wird anchored</p>
+         </boxed-text>
+         <p>Epigraph: _blocks wandelt in disp-quote um, boxed-text verschwindet -&gt; kein anchor (Beweis: Anchor-Step greift nur auf ueberlebende boxed-text):</p>
+         <disp-quote content-type="epigraph">
+            <p>Epigraph-Text</p>
+         </disp-quote>
+         <p>Parallel-Verse: _blocks re-emittiert boxed-text ohne @position -&gt; Anchor-Step setzt position="anchor" dazu (content-type + anchor):</p>
+         <boxed-text content-type="parallel-verse"
+                     position="anchor">
+            <table-wrap content-type="parallel">
+               <table>
+                  <tbody>
+                     <tr>
+                        <td>
+                           <verse-group content-type="verse-group-wrapper">
+                              <verse-group content-type="stanza">
+                                 <verse-line>Links</verse-line>
+                              </verse-group>
+                           </verse-group>
+                        </td>
+                        <td>
+                           <verse-group content-type="verse-group-wrapper-centered">
+                              <verse-group content-type="stanza">
+                                 <verse-line>Rechts</verse-line>
+                              </verse-group>
+                           </verse-group>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </table-wrap>
+         </boxed-text>
+         <p>Expliziter anchor: bleibt unveraendert (idempotent):</p>
+         <boxed-text position="anchor">
+            <p>war schon anchor</p>
+         </boxed-text>
+      </sec>
+   </body>
+</article>

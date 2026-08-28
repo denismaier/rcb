@@ -1,0 +1,10 @@
+# Journal metadata (JNDF)
+# Werte gelten für ALLE Volumes in diesem Journal
+
+journal:
+  title: "Judaica: Neue digitale Folge"
+  publisher-id: JNDF
+  abbrev-title: JNDF
+  eissn: 2673-4273
+  # doi_prefix wird für DOI-Generierung verwendet
+  doi_prefix: 10.36950/jndf

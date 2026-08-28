@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.2 20190208//EN" "JATS-publishing1.dtd">
+<article xml:lang="de"
+         article-type="research-article"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
+   <front>
+      <article-meta>
+         <title-group>
+            <article-title>Figuren-Test</article-title>
+         </title-group>
+      </article-meta>
+   </front>
+   <body>
+      <sec>
+         <label>1</label>
+         <title>Einleitung</title>
+         <p>Normale Figur mit Label.</p>
+         <fig id="fig1">
+            <label>Abbildung 1</label>
+            <caption>
+               <p>Caption Fig 1</p>
+            </caption>
+            <graphic mimetype="image"
+                     mime-subtype="jpeg"
+                     xlink:href="fig1.jpg"/>
+         </fig>
+         <p>Nolabel-Figur: graphic uebernimmt die Caption.</p>
+         <graphic mimetype="image"
+                  mime-subtype="jpeg"
+                  xlink:href="fig2.jpg">
+            <caption>
+               <p>Caption nolabel</p>
+            </caption>
+         </graphic>
+         <p>Figure-Group mit zwei inneren Figuren.</p>
+         <fig-group content-type="fig-group">
+            <label>Abbildung 3</label>
+            <fig id="fig3a">
+               <caption>
+                  <p>Caption 3a</p>
+               </caption>
+               <graphic mimetype="image"
+                        mime-subtype="jpeg"
+                        xlink:href="fig3a.jpg"/>
+            </fig>
+            <fig id="fig3b">
+               <caption>
+                  <p>Caption 3b</p>
+               </caption>
+               <graphic mimetype="image"
+                        mime-subtype="jpeg"
+                        xlink:href="fig3b.jpg"/>
+            </fig>
+         </fig-group>
+      </sec>
+   </body>
+</article>

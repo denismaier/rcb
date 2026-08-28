@@ -1,0 +1,29 @@
+# Article metadata — DEMO (fiktional)
+# Article-spezifische Werte; Publisher/Journal/Volume via Cascade geerbt.
+
+_extract:
+  protect: []
+
+title: "Eine zweite Lorem-Rezension: Musterbands Fortsetzung"
+subtitle: "Ein Untertitel zu Demonstrationszwecken"
+
+author:
+  - surname: Musterfrau
+    given-names: Erika
+    affiliation: "Musterfrau-Hochschule, Demostadt"
+
+lang: de
+
+article:
+  type: book-review
+  doi_article_number: 1
+
+date:
+  month: 2
+
+copyright:
+  holder: "Erika Musterfrau"
+
+tags:
+  - Demo
+  - Lorem

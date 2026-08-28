@@ -1,0 +1,64 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PATHS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Driver - Module geladen per \environment aus ../_assets/context (cwd-relativ; s. docs/plans/context-modularization.md)
+
+\usepath[../_assets/context]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DEBUG MODES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% hier müssen noch modes hin für hyphenation und ligature tracking
+\doifmode {debug} {
+  \showsuspects%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BASE SETTINGS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\environment[_layout_doc_pdf]
+\environment[_layout_doc_penalties]
+\environment[_layout_doc_language]
+\environment[_layout_doc_fonts]
+\environment[_layout_doc_paragraph]
+\environment[_layout_doc_page]
+\environment[_layout_doc_page_header_footer]
+\environment[_layout_doc_floats]
+\environment[_layout_doc_captions]
+\environment[_layout_doc_graphics]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ELEMENTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\environment[_layout_element_headings]
+\environment[_layout_element_footnote]
+\environment[_layout_element_abstract]
+\environment[_layout_element_blockquote]
+\environment[_layout_element_verse]
+\environment[_layout_element_description]
+\environment[_layout_element_itemize]
+\environment[_layout_element_referencelist]
+\environment[_layout_element_tables]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FLOW
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\environment[_layout_doc_flow]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LEGACY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\environment[_layout_doc_legacy]
+
+
+
+
+
+
+

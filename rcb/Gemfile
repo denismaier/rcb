@@ -1,0 +1,14 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+# Specify your gem's dependencies in rcb-cascade.gemspec
+gemspec
+
+group :development do
+  # gem "rubocop", "~> 1.0"  # Requires native extensions on Windows
+end
+
+group :test do
+  gem "minitest", "~> 5.0"
+end

@@ -1,0 +1,826 @@
+
+/* Copyright 2018 Jan Stutzmann, University of Bern, Bern Open Publishing */
+/* Copyright 2026 Denis Maier, University of Bern, University Library and Institute of Jewish Studies */
+
+
+/* ==========================================================================
+   1. Fonts & Variables
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Hebrew:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Arabic:wght@400;700&display=swap');
+
+:root {
+    --color-primary: #44bb91;
+    --color-primary-light: #E7FBF4;
+    --color-text-muted: #555;
+}
+
+body {
+    font-family: "PT Serif", "Noto Serif", serif;
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 0 auto;
+    padding: 0 3em 1em 3em;
+    max-width: 1400px;
+}
+
+:lang(he) {
+    font-family:
+        "Noto Serif Hebrew",
+        "SBL Hebrew",
+        serif;
+}
+
+:lang(ar) {
+    font-family:
+        "Noto Serif Arabic",
+        serif;
+}
+
+
+/* ==========================================================================
+   2. Base Elements
+   ========================================================================== */
+
+p {
+    margin: 0;
+    margin-top: 1ex;
+}
+
+p:first-of-type {
+    margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-weight: 600;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+    word-wrap: break-word;
+}
+
+h2 {
+    color: var(--color-primary);
+    margin: 1.5em 0 0.6em 0;
+}
+
+h3 {
+    font-weight: 600;
+    color: var(--color-primary);
+    margin: 1.5em 0 0.4em 0;
+    font-size: 1.3em;
+}
+
+h4 {
+    font-weight: 600;
+    color: var(--color-primary);
+    margin: 1.5em 0 0.2em 0;
+    font-size: 1em;
+}
+
+a,
+a:active,
+a:visited {
+    color: #007ab2;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #000;
+    text-decoration: underline;
+    background: var(--color-primary-light);
+}
+
+b,
+.bold {
+    font-weight: 600;
+}
+
+i,
+.italic {
+    font-style: italic;
+}
+
+sub,
+sup {
+    font-size: 75%;
+    line-height: 0;
+    vertical-align: baseline;
+}
+
+sup {
+    vertical-align: 0.5em;
+}
+
+sub {
+    vertical-align: -0.25em;
+}
+
+span.smallcaps {
+    font-variant: small-caps;
+}
+
+ol,
+ul {
+    padding-left: 1em;
+}
+
+ol.numbers {
+    list-style-type: decimal;
+}
+
+ol.alphabet {
+    list-style-type: lower-latin;
+}
+
+li {
+    padding-left: 0.3em;
+}
+
+blockquote {
+    display: block;
+    font-weight: normal;
+    font-style: normal;
+    margin-left: 2em;
+}
+
+img {
+    max-width: 100%;
+    min-width: 50%;
+    margin-top: 2ex;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+
+/* ==========================================================================
+   3. Front Matter
+   ========================================================================== */
+
+div.front {
+    text-align: center;
+}
+
+h1.article-title {
+    font-size: 2em;
+    line-height: 1.3;
+    font-weight: 300;
+    color: var(--color-primary);
+}
+
+.subtitle {
+    margin-top: -0.5em;
+    font-size: 2.0em;
+    font-weight: 300;
+    color: var(--color-primary);
+}
+
+h2.title {
+    font-weight: 400;
+}
+
+.trans-abstract--subline {
+    margin-top: -0.5em;
+    color: var(--color-text-muted);
+}
+
+div.contributor {
+    margin-top: 2ex;
+}
+
+.author-name {
+    font-weight: 500;
+    font-style: normal;
+    color: var(--color-text-muted);
+}
+
+.affiliation {
+    font-size: small;
+}
+
+.author-email {
+    font-size: small;
+}
+
+.metadata p.kwd-group {
+    margin-bottom: 1em;
+}
+
+.metadata p.pub-id__pub-id-type_doi,
+.metadata {
+    margin-top: 1em;
+}
+
+.metadata p {
+    font-size: 70%;
+    font-style: normal;
+    margin: 0;
+}
+
+div.metadata {
+    font-size: 70%;
+    font-style: normal;
+    margin: 0;
+    margin-top: 2ex;
+}
+
+div.metadata + h2 {
+    margin-top: 2em;
+}
+
+div.metadata + p {
+    margin-top: 2em;
+}
+
+.abstract {
+    font-size: 100%;
+    margin-bottom: 2em;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+div.frontmatter {
+    margin-bottom: 1em;
+}
+
+div.article-meta-notes {
+    font-size: 90%;
+    font-style: normal;
+    margin: 0;
+}
+
+.contrib {
+    font-size: 80%;
+    font-style: italic;
+    border-top: 1px solid var(--color-primary);
+    border-bottom: 1px solid var(--color-primary);
+    margin-top: 4em;
+    margin-bottom: 2em;
+    padding: 1.3em 2% 1.5em 2%;
+}
+
+.contrib p {
+    margin: 0;
+}
+
+.contrib p + p {
+    margin-top: 1em;
+}
+
+
+/* ==========================================================================
+   4. Body Content
+   ========================================================================== */
+
+div.body p:first-child {
+    margin-top: 2.75em;
+}
+
+.body p {
+    margin: 0;
+}
+
+.body p.sec__specific-use_V1 {
+    text-indent: 0;
+    margin-top: 1.3em;
+}
+
+@media screen and (min-width: 200px) {
+    .body p {
+        -webkit-hyphens: auto;
+        -moz-hyphens: auto;
+        hyphens: auto;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .body p,
+    .body h1,
+    .body h2,
+    .body h3,
+    .body h4 {
+        -webkit-hyphens: none;
+        -moz-hyphens: none;
+        hyphens: none;
+    }
+}
+
+.body div p,
+.body p.abstract {
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    hyphens: none;
+}
+
+p.thought-break-asterism {
+    text-align: center;
+}
+
+p.thought-break {
+    text-align: center;
+    margin-top: 4ex;
+}
+
+div.verse-material,
+div.verse-material-centered {
+    margin-top: 2ex;
+}
+
+div.verse-material {
+    margin-left: 2em;
+}
+
+div.verse-material-centered {
+    text-align: center;
+}
+
+div.verse-material + p {
+    margin-top: 2ex;
+}
+
+p.stanza span.attrib {
+    display: inline-block;
+    margin-top: .5ex;
+}
+
+div[content-type = "dedication"],
+div[content-type = "epigraph"],
+blockquote[content-type = "epigraph"] {
+    text-align: right;
+    margin-left: 3em;
+    font-style: italic;
+}
+
+div[content-type = "dedication"] + p,
+div[content-type = "epigraph"] + p,
+blockquote[content-type = "epigraph"] + p {
+    margin-top: 2em;
+}
+
+pre.epigraph {
+    font-family: inherit;
+}
+
+blockquote[content-type="epigraph"] p.attrib {
+    font-style: normal;
+}
+
+div[content-type = "signature"] p:first-of-type {
+    margin-top: 4ex;
+}
+
+.righttoleft {
+    direction: rtl;
+}
+
+/* p not strictly necessary;
+we're adding the style="direction: rtl; text-align:right;" on the <p> itself */
+p[content-type = "righttoleft"],
+div[content-type = "righttoleft"] {
+    direction: rtl;
+    text-align: right;
+}
+
+p .he {
+    text-align: right;
+}
+
+
+/* ==========================================================================
+   5. Back Matter
+   ========================================================================== */
+
+div.back {
+    margin-top: 2.5em;
+    border-top: 1px solid var(--color-primary);
+    border-bottom: 1px solid var(--color-primary);
+    padding-bottom: 2.5em;
+    margin-bottom: 2.5em;
+}
+
+.back h4 {
+    color: var(--color-text-muted);
+    margin-top: 2.5em;
+    margin-bottom: 1.0em;
+}
+
+.back h5 {
+    color: var(--color-primary);
+}
+
+.back h5.app-group--title {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.back p {
+    margin: 0;
+}
+
+.back p + p {
+    text-indent: 0;
+}
+
+.back .bibr p {
+    padding-left: 1.5em;
+    text-indent: -1.5em;
+}
+
+.back .fn p {
+    padding-left: 1.5em;
+    text-indent: -1.5em;
+}
+
+div.ref-list p {
+    padding-left: 1.5em;
+    text-indent: -1.5em;
+}
+
+div.ref-list-shorthands table {
+    border-collapse: separate;
+    border-spacing: 15px 0px;
+    margin: 0px -15px;
+}
+
+div.ref-list-shorthands table tr td:nth-of-type(1) {
+    vertical-align: top;
+}
+
+ol[class = "fn-group"] li {
+    margin-top: .5em;
+    margin-bottom: .5em;
+}
+
+a.fn-back {
+    display: inline;
+}
+
+
+/* ==========================================================================
+   6. Tables
+   ========================================================================== */
+
+div.table-wrap {
+    margin-top: 2ex;
+    margin-bottom: 2ex;
+}
+
+table.tbase {
+    border-collapse: collapse;
+    border-color: var(--color-primary);
+    border-style: solid;
+    border-width: 1px;
+    margin-bottom: -4px;
+    margin-top: 4px;
+    text-indent: 0;
+}
+
+td.tbase {
+    border: 1px solid #000;
+    padding: 4px;
+    vertical-align: top;
+    text-indent: 0;
+}
+
+th.thead {
+    background-color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+    padding: 5px 5px 6px 6px;
+    color: #ffffff;
+    font-size: 80%;
+    font-weight: 500;
+    line-height: 1.589;
+    text-align: left;
+}
+
+p.table,
+.table_right,
+.table_centered {
+    font-size: 80%;
+    line-height: 1.589;
+    text-align: left;
+    text-indent: 0;
+    vertical-align: top;
+}
+
+.table_centered {
+    text-align: center;
+}
+
+.table_right {
+    text-align: right;
+}
+
+p.table_caption span.table_caption_label {
+    font-style: italic;
+}
+
+p.table_label {
+    font-style: italic;
+    font-weight: bold;
+    font-size: small;
+    text-align: left;
+    padding-top: 1em;
+}
+
+div.parallel {
+    display: block;
+    margin-top: 2ex;
+}
+
+table[content-type = "parallel-r2l"] tr td:nth-child(1) {
+    text-align: right;
+    direction: rtl;
+    vertical-align: top;
+}
+
+table[content-type = "parallel-r2l"] {
+    border-collapse: separate;
+    border-spacing: 15px 0px;
+}
+
+table[content-type = "parallel-r2l"] tr {
+    vertical-align: top;
+}
+
+table[content-type = "parallel"] tr td:nth-child(1) {
+    vertical-align: top;
+}
+
+table[content-type = "parallel"] {
+    border-collapse: separate;
+    border-spacing: 15px 0px;
+}
+
+table[content-type = "parallel"] tr {
+    vertical-align: top;
+}
+
+div.parallel table tbody tr td:nth-of-type(1),
+div.parallel table tbody tr td:nth-of-type(2) {
+    width: 50%;
+    vertical-align: top;
+}
+
+div.parallel table {
+    border-collapse: separate;
+    border-spacing: 15px 0px;
+    margin: 0px -15px;
+}
+
+div.parallel p.table_caption {
+    margin-bottom: 0.5ex;
+}
+
+table.left-rtl tbody tr td:nth-of-type(1),
+table.right-rtl tbody tr td:nth-of-type(2) {
+    direction: rtl;
+    text-align: right;
+}
+
+div.parallel + p {
+    margin-top: 2ex;
+}
+
+
+/* ==========================================================================
+   7. Figures
+   ========================================================================== */
+
+p.pic {
+    text-align: center;
+    margin-top: 0;
+    text-indent: 0em;
+}
+
+p.pic_label {
+    font-style: italic;
+    font-weight: bold;
+    font-size: small;
+    text-align: center;
+    padding-bottom: 1em;
+}
+
+p.pic_caption {
+    font-weight: normal;
+    font-size: small;
+    text-align: center;
+    padding-bottom: 1em;
+}
+
+p.pic_caption span.pic_caption_label {
+    font-style: italic;
+}
+
+p.pic_caption + p {
+    text-indent: 0;
+}
+
+div.fig-group div.row {
+    column-count: 2;
+    margin-bottom: -30px;
+}
+
+div.fig-group div.row figure {
+    float: left;
+    padding: 5px;
+}
+
+div.fig-group div.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+
+/* ==========================================================================
+   8. Inline Specials
+   ========================================================================== */
+
+/* CB:Textvars */
+/* A =  underlined */
+/* B =  grey background */
+/* C =  text color red */
+
+span.cb-textvarA,
+span.cb-textvarAB,
+span.cb-textvarAC,
+span.cb-textvarABC { text-decoration: underline }
+
+span.cb-textvarB,
+span.cb-textvarAB,
+span.cb-textvarBC,
+span.cb-textvarABC { background-color: #eee }
+
+span.cb-textvarC,
+span.cb-textvarAC,
+span.cb-textvarBC,
+span.cb-textvarABC { color: red }
+
+a.xref-bibr {
+    padding: 1px 2px 3px 2px;
+    color: #000;
+    text-decoration: none;
+    background-color: var(--color-primary-light);
+}
+
+a.xref-bibr:hover {
+    text-decoration: underline;
+}
+
+p:target {
+    background-color: var(--color-primary-light);
+}
+
+div:target {
+    background-color: var(--color-primary-light);
+}
+
+li.fn:target {
+    background-color: var(--color-primary-light);
+}
+
+
+/* ==========================================================================
+   9. Layout & Media Queries
+   ========================================================================== */
+
+@media screen and (min-width: 1000px) {
+
+    div.abstract {
+        font-style: normal;
+        margin: 0;
+        margin-top: 2em;
+        margin-bottom: 2em;
+        padding-bottom: 1em;
+        padding-top: 0.5em;
+        border-top: 1px solid var(--color-primary);
+        border-bottom: 1px solid var(--color-primary);
+    }
+
+    .abstract h3 {
+        margin-top: 0em;
+    }
+
+    .toc {
+        position: fixed;
+        z-index: 1; /* Stay on top */
+        top: 0; /* Stay at the top */
+        margin: 3em auto;
+        background-color: #eee;
+        overflow-x: hidden; /* Disable horizontal scroll */
+        max-height: calc(100vh - 9rem);
+        overflow-y: auto;
+        padding-top: 1em;
+        padding-bottom: 1.5em;
+        padding-left: 1em;
+        float: left;
+        width: 15em;
+        border-radius: 25px;
+    }
+
+    /* The navigation menu links */
+    .toc a {
+        padding-left: 1em;
+        padding-right: 1em;
+        padding-top: 0.5em;
+        text-decoration: none;
+        color: black;
+        display: inline-block;
+    }
+
+    .toc a:hover {
+        color: var(--color-primary);
+        background-color: #eee;
+    }
+
+    .toc h2,
+    .toc h3 {
+        display: none;
+    }
+
+    /* Style page content */
+    .main {
+        padding: 0px 10px;
+        width: 60%;
+        margin-left: 17em;
+        margin-right: auto;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+
+    .main,
+    .toc {
+        width: 100%;
+        margin: 0;
+    }
+
+    div.abstract-and-toc {
+        font-style: normal;
+        margin: 0;
+        margin-top: 2em;
+        margin-bottom: 2em;
+        padding-bottom: 0.5em;
+        padding-top: 1em;
+        border-top: 1px solid var(--color-primary);
+        border-bottom: 1px solid var(--color-primary);
+    }
+
+    /* The TOC */
+    .toc {
+        top: 0; /* Stay at the top */
+        margin: 0em;
+        overflow-x: hidden; /* Disable horizontal scroll */
+        padding-top: 1em;
+        padding-bottom: 1em;
+    }
+
+    /* The navigation menu links */
+    .toc a {
+        padding-left: 2%;
+        padding-right: 2%;
+        padding-top: 0em;
+        text-decoration: none;
+        color: black;
+        display: inline-block;
+    }
+
+    .toc a:first-of-type {
+        padding-top: 0em;
+    }
+
+    .toc a:hover {
+        color: var(--color-primary);
+        background-color: transparent;
+    }
+
+    .toc h2,
+    .toc h3 {
+        margin-top: 0em;
+        padding-left: 2%;
+        padding-right: 2%;
+    }
+
+    div.abstract {
+        margin-top: 0em;
+        margin-bottom: 0em;
+    }
+
+    div.abstract h3 {
+        margin-top: 0em;
+    }
+
+    div.fig-group div.row {
+        column-count: 1;
+        margin-bottom: -30px;
+    }
+
+}

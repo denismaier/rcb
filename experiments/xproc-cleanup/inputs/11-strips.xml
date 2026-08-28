@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xml:lang="de" article-type="research-article">
+  <front>
+    <article-meta>
+      <title-group>
+        <article-title>Strips-Test</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib>
+          <name>
+            <surname>Doe</surname>
+          </name>
+          <aff id="aff-">Org A (contrib)</aff>
+        </contrib>
+      </contrib-group>
+      <aff id="aff-">Org A</aff>
+      <aff id="">Org B (leere id)</aff>
+      <aff id="aff-bern">Bern (legitim)</aff>
+    </article-meta>
+  </front>
+  <body>
+    <sec>
+      <title>Wrapper + Strips</title>
+      <p specific-use="wrapper">Ein <xref ref-type="fn" rid="fn1">Wrapper-Text</xref> mit Referenz.</p>
+      <p>Nach dem Wrapper.</p>
+    </sec>
+  </body>
+  <back>
+    <fn-group>
+      <fn id="fn1">
+        <label>1</label>
+        <p>Eine Fussnote.</p>
+      </fn>
+    </fn-group>
+  </back>
+</article>

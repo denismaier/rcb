@@ -1,0 +1,13 @@
+# Publisher metadata (Inhaltsmetadaten, nicht Build-Infrastruktur!)
+# Werte gelten für ALLE Journals und Volumes
+
+# Copyright (Fallback für alle Levels)
+copyright:
+  type: open-access
+  link: https://creativecommons.org/licenses/by/4.0/
+  text: This work is licensed under Creative Commons Attribution 4.0 International.
+
+# Journal defaults (werden von journal-level überschrieben)
+journal:
+  publisher-name: Bern Open Publishing
+  publisher-loc: Bern, Switzerland

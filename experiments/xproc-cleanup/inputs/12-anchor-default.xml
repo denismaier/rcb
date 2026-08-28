@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xml:lang="de" article-type="research-article">
+  <front>
+    <article-meta>
+      <title-group>
+        <article-title>Anchor-Default-Test</article-title>
+      </title-group>
+    </article-meta>
+  </front>
+  <body>
+    <sec>
+      <title>Anchor-Default</title>
+
+      <p>Plain boxed-text ohne @position -> bekommt position="anchor":</p>
+      <boxed-text>
+        <p>wird anchored</p>
+      </boxed-text>
+
+      <p>Epigraph: _blocks wandelt in disp-quote um, boxed-text verschwindet -> kein anchor (Beweis: Anchor-Step greift nur auf ueberlebende boxed-text):</p>
+      <boxed-text content-type="epigraph">
+        <p>Epigraph-Text</p>
+      </boxed-text>
+
+      <p>Parallel-Verse: _blocks re-emittiert boxed-text ohne @position -> Anchor-Step setzt position="anchor" dazu (content-type + anchor):</p>
+      <boxed-text content-type="parallel-verse">
+        <boxed-text content-type="verse">
+          <p>
+            <named-content content-type="verse-line">Links</named-content>
+          </p>
+        </boxed-text>
+        <boxed-text content-type="verse-centered">
+          <p>
+            <named-content content-type="verse-line">Rechts</named-content>
+          </p>
+        </boxed-text>
+      </boxed-text>
+
+      <p>Expliziter anchor: bleibt unveraendert (idempotent):</p>
+      <boxed-text position="anchor">
+        <p>war schon anchor</p>
+      </boxed-text>
+
+    </sec>
+  </body>
+</article>
