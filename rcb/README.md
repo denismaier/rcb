@@ -75,4 +75,4 @@ bundle exec rake rubocop
 
 ## License
 
-MIT
+CC0-1.0 Universal (public domain dedication). See [LICENSE](LICENSE).

@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary       = "Ruby Cascade Build with cascading configuration"
   spec.description   = "Rake-based build system with hierarchical configuration similar to doit-cascade"
   spec.homepage      = "https://github.com/denis/rcb-cascade"
-  spec.license       = "MIT"
+  spec.license       = "CC0-1.0"
   spec.required_ruby_version = ">= 3.0.0"
 
   spec.metadata["homepage_uri"] = spec.homepage

@@ -165,4 +165,4 @@ bundle exec rake test          # core unit tests (see roadmap Phase 6 for the re
 
 ## License
 
-Same as parent project.
+CC0-1.0 Universal (public domain dedication). See [LICENSE](LICENSE).
