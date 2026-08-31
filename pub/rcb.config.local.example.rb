@@ -7,13 +7,20 @@
 # pinned Pandoc version or exact JAR locations.
 #
 # The defaults in rcb.config.rb assume the tools are on PATH (pandoc,
-# magick, context, morgana, zip) and bare JAR names (saxon-he.jar, jing.jar,
-# schxslt2/transpile.xsl). Set these only if your layout differs.
+# magick, morgana, context, zip, java, transform) and bare JAR/XSL names
+# (saxon-he.jar, jing.jar, schxslt2/transpile.xsl). Set these only if
+# your layout differs.
 #
 # ENV vars (RCB_PANDOC_CMD, RCB_SAXON_HE_JAR, RCB_JING_JAR,
-# RCB_SCHXSLT2_XSL) are an alternative to this file.
+# RCB_SCHXSLT2_XSL, RCB_XPROC_CMD, RCB_CONTEXT_CMD, RCB_ZIP_CMD,
+# RCB_JAVA_CMD, RCB_XSLT_CMD) are an alternative to this file.
 
-# CFG['pandoc_cmd']   = 'C:/tools/pandoc/3.10.2/pandoc.exe'
-# CFG['saxon_he_jar'] = 'C:/tools/saxon/saxon-he-12.5.jar'
+# CFG['pandoc_cmd']    = 'C:/tools/pandoc/3.10.2/pandoc.exe'
+# CFG['saxon_he_jar']  = 'C:/tools/saxon/saxon-he-12.5.jar'
 # CFG['jing_jar']      = 'C:/tools/jing/bin/jing.jar'
 # CFG['schxslt2_xsl']  = 'C:/tools/schxslt2/transpile.xsl'
+# CFG['xproc_cmd']     = 'C:/tools/morgana/morgana.bat'   # XProc runner (default: morgana)
+# CFG['context_cmd']   = 'C:/context/tex/texmf-windows/bin/context.exe'
+# CFG['zip_cmd']       = 'C:/tools/zip/zip.exe'
+# CFG['java_cmd']      = 'C:/tools/jdk/bin/java.exe'
+# CFG['xslt_cmd']      = 'C:/tools/saxon/transform.bat'   # XSLT runner (default: Saxon transform)

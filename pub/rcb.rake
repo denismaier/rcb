@@ -605,7 +605,7 @@ task :md_to_xml => [md_to_xml[:out]]
 xml_clean = {
   in:      md_to_xml[:out],
   out:     (BUILD_DIR / "xml/02-xml-clean-#{basename}.xml").to_s,
-  tool:    'morgana',
+  tool:    CFG['xproc_cmd'],
   xpl:     (BUILD_DIR / '_assets/xproc/cleanup.xpl').to_s,
   catalog: (BUILD_DIR / '_assets/jats-dtd/catalog-jats-v1-2-no-base.xml').to_s,
   desc:    "Clean XML via XProc pipeline (Morgana)",
@@ -664,7 +664,7 @@ task :xml_clean => [xml_clean[:out]]
 validate_xml_rng = {
   in:     xml_clean[:out],
   out:    (BUILD_DIR / "xml/03-xml-validated-#{basename}.xml").to_s,
-  tool:   'java',
+  tool:   CFG['java_cmd'],
   jar:    CFG['jing_jar'],
   schema: (BUILD_DIR / '_assets/jats-rng/JATS-journalpublishing1.rng').to_s,
   desc:   "Validate cleaned XML against JATS RNG schema (jing)",
@@ -757,7 +757,7 @@ file validate_xml_schematron[:out] => [validate_xml_schematron[:in]] + validate_
   if needs_transpile
     puts '[validate_xml_schematron] Transpiling wrapper to .xsl...'
     cmd = [
-      'java', '-jar', validate_xml_schematron[:saxon_jar],
+      CFG['java_cmd'], '-jar', validate_xml_schematron[:saxon_jar],
       '-s:' + wrapper,
       '-xsl:' + CFG['schxslt2_xsl'],
       '-o:' + xsl_file
@@ -778,7 +778,7 @@ file validate_xml_schematron[:out] => [validate_xml_schematron[:in]] + validate_
 
   # Das XSLT auf das XML anwenden, ergibt SVRL-Report
   cmd = [
-    'java', '-jar', validate_xml_schematron[:saxon_jar],
+    CFG['java_cmd'], '-jar', validate_xml_schematron[:saxon_jar],
     '-s:' + no_doctype,
     '-xsl:' + xsl_file,
     '-o:' + svrl_path
@@ -810,7 +810,7 @@ task :validate_xml_schematron => [validate_xml_schematron[:out]]
 xml_typo = {
   in:     validate_xml_schematron[:out],
   out:    (BUILD_DIR / "xml/05-xml-typo-#{basename}.xml").to_s,
-  tool:   'transform',
+  tool:   CFG['xslt_cmd'],
   xsl:    (BUILD_DIR / '_assets/xslt/_typography.xsl').to_s,
   catalog: (BUILD_DIR / '_assets/jats-dtd/catalog-jats-v1-2-no-base.xml').to_s,
   desc:   "Apply typography replacements to XML (XSLT)",
@@ -903,7 +903,7 @@ task :xml_to_output => [xml_to_output[:out]]
 xml_to_refs = {
   in:      xml_publish[:out],
   out:     (BUILD_DIR / "refs/#{basename}-references.txt").to_s,
-  tool:    'transform',
+  tool:    CFG['xslt_cmd'],
   xsl:     (BUILD_DIR / '_assets/xslt/jats2refs.xsl').to_s,
   catalog: (BUILD_DIR / '_assets/jats-dtd/catalog-jats-v1-2-no-base.xml').to_s,
   desc:    "Extract references as plain text, one per line (OJS)",
@@ -962,6 +962,7 @@ if image_targets.any?
   xml_to_zip = {
     in:   [xml_publish[:out], *image_targets, *original_image_sources],
     out:  (OUTPUT_DIR / "xml/#{basename}.zip").to_s,
+    tool:  CFG['zip_cmd'],
     desc: "Bundle XML + web images + originals into ZIP",
   }
 
@@ -979,7 +980,7 @@ if image_targets.any?
     FileUtils.mkdir_p(File.dirname(t.name))
     FileUtils.rm_f(t.name)  # sonst hängt zip ans existierende Archiv an
     abs_out = File.expand_path(t.name)
-    _stdout, stderr, status = Open3.capture3('zip', '-r', '-q', abs_out, '.', chdir: staging.to_s)
+    _stdout, stderr, status = Open3.capture3(xml_to_zip[:tool], '-r', '-q', abs_out, '.', chdir: staging.to_s)
     raise "zip failed: #{stderr}" unless status.success?
 
     puts "[xml_to_zip] #{File.basename(t.name)}"
@@ -998,7 +999,7 @@ end
 xml_to_html = {
   in:      xml_final[:out],
   out:     (BUILD_DIR / "html/#{basename}.html").to_s,
-  tool:    'transform',
+  tool:    CFG['xslt_cmd'],
   xsl:     (BUILD_DIR / '_assets/xslt/jats2html.xsl').to_s,
   catalog: (BUILD_DIR / '_assets/jats-dtd/catalog-jats-v1-2-no-base.xml').to_s,
   desc:    "Convert XML to HTML (Saxon)",
@@ -1028,7 +1029,7 @@ task :xml_to_html => [xml_to_html[:out]]
 xml_to_html_test = {
   in:      xml_final[:out],
   out:     (BUILD_DIR / "html/test-#{basename}.html").to_s,
-  tool:    'transform',
+  tool:    CFG['xslt_cmd'],
   xsl:     (BUILD_DIR / '_assets/xslt/jats2html.xsl').to_s,
   catalog: (BUILD_DIR / '_assets/jats-dtd/catalog-jats-v1-2-no-base.xml').to_s,
   css:     'galley.css',
@@ -1109,7 +1110,7 @@ context_modules = RCB.load_manifest['assets'].keys
 xml_to_pdf = {
   in:      xml_final[:out],
   out:     (BUILD_DIR / "pdf/#{basename}.pdf").to_s,
-  tool:    'context',
+  tool:    CFG['context_cmd'],
   jats:    (BUILD_DIR / '_assets/context/jats.tex').to_s,
   layout:  (BUILD_DIR / '_assets/context/layout.tex').to_s,
   mode:    CFG['context_mode'] || 'article',
@@ -1170,7 +1171,7 @@ task :pdf_to_output => [pdf_to_output[:out]]
 xml_to_pdf_test = {
   in:      xml_final[:out],
   out:     (BUILD_DIR / "pdf/#{basename}-test.pdf").to_s,
-  tool:    'context',
+  tool:    CFG['context_cmd'],
   mode:    CFG['context_mode'] || 'article',
   desc:    "Convert XML to test PDF (ConTeXt)",
 }

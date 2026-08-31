@@ -441,6 +441,38 @@ aus JATS `title-group` wird in **beiden** Renderern sichtbar (vorher nur
 **Offen (Folgetask 2):** Rezensionen — besprochenes Werk als
 `<product>`/`<related-object>`, Angabe aus dem Titel raus.
 
+### 2026-08-31: Alle externen Tools pfad-konfigurierbar (CFG `*_cmd`)
+**Decision:** Alle fünf verbleibenden hartcodierten Tool-Aufrufe in
+`pub/rcb.rake` auf CFG-Keys umstellen: `morgana`, `context`, `zip`,
+`java`, `transform` (Saxon-CLI) → `CFG['xproc_cmd']`/
+`CFG['context_cmd']`/`CFG['zip_cmd']`/`CFG['java_cmd']`/
+`CFG['xslt_cmd']`, analog zum bestehenden `pandoc_cmd`-Muster mit
+bare Default + ENV-Fallback (`RCB_XPROC_CMD` usw.). Der XProc-Runner
+(Default: Morgana) und der XSLT-Runner (Default: Saxons `transform`)
+sind **funktionsbenannt**, die übrigen toolbenannt: der Key benennt,
+was der Schritt tut (XProc/XSLT anwenden) — passt auch für einen
+künftigen anderen Prozessor (Calabash, Phase 20c). Caveat: die
+Aufruf-Flags in `rcb.rake` bleiben tool-spezifisch (Morganas
+`-catalogs=`/`-option:`, Saxons `-xsl:`/`-catalog:`) — der Name ist
+Intent, keine Portabilitätsgarantie.
+**Rationale:** Clone-freundlichkeit: kein Tool muss auf PATH liegen —
+pinned Versionen (z. B. Pandoc 3.10.2) oder absolute Pfade sind pro
+Maschine über `rcb.config.local.rb` bzw. ENV setzbar, ohne rcb.rake zu
+editieren. Vorher waren nur Pandoc/ImageMagick + JAR/XSL-Pfade
+konfigurierbar; die fünf restlichen waren bare Literale (gleiche
+PATH-Risiken). Damit ist jetzt **jedes** externe Tool einheitlich
+konfigurierbar. `zip` rückte dabei zusätzlich ins idiomatische
+Task-Hash-Muster (`xml_to_zip[:tool]` statt Inline-Literal); die beiden
+`java`-Literale in `validate_xml_schematron` (Transpile + Validation)
+waren zuvor am Hash-Key vorbei direkt in den cmd-Arrays.
+**Changes:** `pub/rcb.config.rb` (+5 Keys),
+`pub/rcb.config.local.example.rb` + `docs/setup.md` ergänzt
+(ENV-Liste, Tool-Tabelle, Beispiele). Verifikation: kaltes
+`build_all` auf dem Demo-Artikel (`jds-2026-001-mustermann`)
+vollständig grün (xproc/java/xslt/context);
+`xml_to_zip` separat mit temporärem Testbild verifiziert (Demo-Artikel
+hat keine Bilder — Task ist load-zeit-gated), danach Rückbau.
+
 ### 2026-08-29: Catalog-DOCTYPE entfernt (xml_typo/Saxon-Catalog-Bug)
 **Decision:** DOCTYPE aus der Catalog-Datei
 `pub/_assets/jats-dtd/catalog-jats-v1-2-no-base.xml` entfernen.

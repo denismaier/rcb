@@ -14,11 +14,20 @@ CFG['image_quality']    = 85
 # version or a JAR location), copy rcb.config.local.example.rb to
 # rcb.config.local.rb (gitignored) and override there — it loads after
 # these defaults. ENV vars (RCB_PANDOC_CMD, RCB_SAXON_HE_JAR, RCB_JING_JAR,
-# RCB_SCHXSLT2_XSL) also win over the bare defaults.
+# RCB_SCHXSLT2_XSL, RCB_XPROC_CMD, RCB_CONTEXT_CMD, RCB_ZIP_CMD,
+# RCB_JAVA_CMD, RCB_XSLT_CMD) also win over the bare defaults.
 CFG['jing_jar']         = ENV['RCB_JING_JAR']     || 'jing.jar'
 CFG['schxslt2_xsl']     = ENV['RCB_SCHXSLT2_XSL']  || 'schxslt2/transpile.xsl'
 CFG['saxon_he_jar']     = ENV['RCB_SAXON_HE_JAR'] || 'saxon-he.jar'
 CFG['pandoc_cmd']       = ENV['RCB_PANDOC_CMD']   || 'pandoc'
+# xproc_cmd/xslt_cmd are function-named (what the step runs, not which
+# tool); the bare defaults are the Morgana/Saxon CLIs and the invocation
+# flags in rcb.rake remain tool-specific.
+CFG['xproc_cmd']        = ENV['RCB_XPROC_CMD']    || 'morgana'
+CFG['context_cmd']      = ENV['RCB_CONTEXT_CMD']  || 'context'
+CFG['zip_cmd']          = ENV['RCB_ZIP_CMD']      || 'zip'
+CFG['java_cmd']         = ENV['RCB_JAVA_CMD']     || 'java'
+CFG['xslt_cmd']         = ENV['RCB_XSLT_CMD']     || 'transform'
 
 # Section-Heading-Nummerierung abschalten (XSLT: kein <label> im JATS;
 # ConTeXt: keine Heading-Nummern im PDF). Default false = Nummerierung an

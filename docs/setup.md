@@ -27,14 +27,14 @@ Only needed to run the `pub/` publishing pipeline. The gem alone
 | Tool | Used by | Install hint |
 |------|---------|--------------|
 | [Pandoc](https://pandoc.org) | `source_to_md`, `md_to_xml` | download; `CFG['pandoc_cmd']` |
-| [Morgana XProc](https://www.xml-project.com/morganaXProc-ix.html) | `xml_clean` (XProc pipeline) | download; needs the Saxon HE JAR in its `_lib/` |
-| [Saxon HE](https://www.saxonica.com/download/java.xml) | `xml_typo`, `validate_xml_schematron`, SchXslt2 transpile | download the HE JAR; `CFG['saxon_he_jar']` |
+| [Morgana XProc](https://www.xml-project.com/morganaXProc-ix.html) | `xml_clean` (XProc pipeline) | download; needs the Saxon HE JAR in its `_lib/`; `CFG['xproc_cmd']` |
+| [Saxon HE](https://www.saxonica.com/download/java.xml) | `xml_typo`, `xml_to_refs`, `xml_to_html`, `validate_xml_schematron`, SchXslt2 transpile | download the HE JAR; `CFG['saxon_he_jar']`, `CFG['xslt_cmd']` |
 | [SchXslt2](https://github.com/schxslt/schxslt2) | Schematron transpile | clone/download; `CFG['schxslt2_xsl']` |
 | [jing](https://github.com/relaxng/jing-trang) | `validate_xml_rng` (JATS-RNG) | build/download; `CFG['jing_jar']` |
-| [ConTeXt](https://wiki.contextgarden.net/Installation) | `xml_to_pdf` | install; `context` on PATH |
+| [ConTeXt](https://wiki.contextgarden.net/Installation) | `xml_to_pdf` | install; `CFG['context_cmd']` |
 | [ImageMagick](https://imagemagick.org) | `convert_images` | install; `magick` on PATH (`CFG['image_tool']`) |
-| [Info-ZIP](https://infozip.sourceforge.net) | `xml_to_zip` | `zip` on PATH (preinstalled on most systems) |
-| Java | Saxon, Morgana, jing (all JAR-based) | a JRE is enough |
+| [Info-ZIP](https://infozip.sourceforge.net) | `xml_to_zip` | `CFG['zip_cmd']` (preinstalled on most systems) |
+| Java | Saxon, Morgana, jing (all JAR-based) | a JRE is enough; `CFG['java_cmd']` |
 
 The JATS DTD and RNG bundles ship in the repo under
 `pub/_assets/jats-dtd/` and `pub/_assets/jats-rng/` — no download needed.
@@ -75,10 +75,10 @@ PATH or set up an alias.
 ## 5. Set tool paths (only if not on PATH)
 
 `pub/rcb.config.rb` defaults to bare tool names, assuming everything is
-on PATH (`pandoc`, `magick`, `context`, `morgana`, `zip`) and bare JAR
-names (`saxon-he.jar`, `jing.jar`, `schxslt2/transpile.xsl`). If your
-layout differs — e.g. a pinned Pandoc version or specific JAR locations —
-override in one of two ways:
+on PATH (`pandoc`, `magick`, `morgana`, `context`, `zip`, `java`,
+`transform`) and bare JAR/XSL names (`saxon-he.jar`, `jing.jar`,
+`schxslt2/transpile.xsl`). If your layout differs — e.g. a pinned Pandoc
+version or specific JAR locations — override in one of two ways:
 
 **a) Local override file (recommended for persistent setups):**
 
@@ -97,6 +97,11 @@ export RCB_PANDOC_CMD=/opt/pandoc/3.10.2/pandoc
 export RCB_SAXON_HE_JAR=/opt/saxon/saxon-he-12.5.jar
 export RCB_JING_JAR=/opt/jing/bin/jing.jar
 export RCB_SCHXSLT2_XSL=/opt/schxslt2/transpile.xsl
+export RCB_XPROC_CMD=/opt/morgana/morgana
+export RCB_CONTEXT_CMD=/opt/context/bin/context
+export RCB_ZIP_CMD=/usr/bin/zip
+export RCB_JAVA_CMD=/opt/jdk/bin/java
+export RCB_XSLT_CMD=/opt/saxon/transform
 ```
 
 ENV vars win over the bare defaults; the local file wins over both.
