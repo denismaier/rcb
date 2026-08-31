@@ -176,16 +176,33 @@ class TestRCB < Minitest::Test
 
   # --- test_load_manifest ---
 
-  # load_manifest ist nur ein Wrapper um YAML.load_file(MANIFEST_PATH)
-  # Da MANIFEST_PATH eine Konstante ist, testen wir hier das Verhalten indirekt
+  # load_manifest ist nur ein Wrapper um YAML.load_file(MANIFEST_PATH).
+  # MANIFEST_PATH ist eine Konstante — für die Test-Fixture wird sie
+  # temporär auf eine tmp-Datei umgebogen und danach restauriert.
   def test_load_manifest_loads_existing_manifest
-    # Nutze die publisher fixture falls vorhanden
-    manifest_path = Pathname.new("publisher/.build/manifest.yaml")
-    skip "publisher/.build/manifest.yaml not found" unless manifest_path.exist?
+    original_path = RCB::MANIFEST_PATH
+    Dir.mktmpdir do |tmp|
+      manifest_path = Pathname.new(tmp) / "manifest.yaml"
+      File.write(manifest_path, {
+        "cascade"  => [],
+        "configs"  => [],
+        "assets"   => {},
+        "sources"  => {},
+        "metadata" => [],
+      }.to_yaml)
 
-    result = RCB.load_manifest
-    assert_instance_of(Hash, result)
-    assert result.key?("cascade")
+      RCB.send(:remove_const, :MANIFEST_PATH)
+      RCB.const_set(:MANIFEST_PATH, manifest_path)
+
+      result = RCB.load_manifest
+      assert_instance_of(Hash, result)
+      assert result.key?("cascade")
+    end
+  ensure
+    if RCB.const_defined?(:MANIFEST_PATH) && RCB::MANIFEST_PATH != original_path
+      RCB.send(:remove_const, :MANIFEST_PATH)
+      RCB.const_set(:MANIFEST_PATH, original_path)
+    end
   end
 
   # --- test_ensure_dirs ---

@@ -492,6 +492,38 @@ sie hier die Catalog-Datei selbst, nicht die Inhalts-XML betraf.
 durch erklärenden Kommentar ersetzt). Kaltes `build_all` auf dem
 Demo-Artikel (`jds-2026-001-mustermann`) danach vollständig grün.
 
+### 2026-08-31: Kleine Lücken geschlossen (Post-Produktivreife-Sweep)
+**Decision:** Repo-Sweep nach Produktivreife-Check: keine dringenden
+Blocker, aber fünf kleine Lücken schließen. (1) Stale CLI-Hinweise
+(`rvw run rcb list` → `rcb-dev list`; `rcb extract_metadata` → `rcb-dev`)
+und Kommentarpfad (`docs/user/article-workflow.md`). (2) Toten
+`when 'xml'`-Branch in `extract_metadata` entfernt — referenzierte das
+nie existierende Template `metadata-extract-xml.txt` und einen
+Dateinamen, den die Pipeline nie schreibt; `source_format = 'xml'`
+fällt jetzt auf den klaren else-Raise. (3) basename-Guard: neuer
+`require_article`-Task, der an allen Pipeline-Alias-Tasks als erstes
+Prerequisite hängt und fail-fast raised, wenn `CFG['basename']` fehlt
+(Aufruf von Journal-/Publisher-Ebene), statt `nil` in file-task-Namen
+zu interpolieren. (4) `load_manifest`-Test auf echte tmp-Fixture
+umgebaut (statt still-skipendem Verweis auf nicht existierendes
+`publisher/.build/`). (5) `image_tool` bekommt als letzter Tool-Key den
+`RCB_IMAGE_TOOL`-ENV-Fallback; Beispiel-Config um Behavior-Flags
+ergänzt.
+**Rationale:** Zu (3): Load-Zeit-Raise mit Whitelist geht nicht —
+`pub/rcb.rake` lädt vor den Journal-/Volume-Rakefiles und kennt deren
+Custom-Tasks (`volume_info`, `full_article_info`) nicht; ein
+Prerequisite-Guard läuft vor dem file-task-Chain, greift nur bei
+tatsächlich angeforderten Pipeline-Tasks und lässt Custom-Tasks
+unberührt. Zu (2): XML-Source ist ohnehin aufgeschoben (Single-Entry
+by design, Memory `project_pipeline_entry_model.md`).
+**Changes:** `pub/rcb.rake`, `rcb/test/test_rcb.rb`,
+`pub/rcb.config.rb`, `pub/rcb.config.local.example.rb`, `docs/setup.md`.
+Nicht gewählt und stattdessen als Roadmap-Nebeneinträge gesichert:
+ConTeXt-Layout-TODOs (Ed./Hrsg., Tabulate-Breite) + RTL-Alternative in
+`jats2html.xsl`. Verifikation: `rake test` 16 runs / 48 assertions /
+0 skips (load_manifest läuft jetzt); Guard negativ von `pub/` (klare
+Raise-Meldung) und positiv am Demo-Artikel (`build_all` grün).
+
 ---
 
 ## Abgeschlossene Phasen (Übersicht)

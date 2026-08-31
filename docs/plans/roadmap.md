@@ -199,6 +199,26 @@ keinen Body-Filter, der Byline/Autor/Affiliation/Email automatisch aus dem
 Body entfernt — der Editor muss sie im Word löschen, sonst doppelt im
 Front-Matter. Filter würde das automatisieren.
 
+### ConTeXt-Layout-TODOs 📝
+
+Zwei offene Layout-Marker, die echte JNDF-PDFs betreffen:
+- `pub/_assets/context/jats.tex:1302` — Siglen-Tabulate
+  (`xml:list-of-shorthands`): `% TODO: LAYOUT prüfen!` an der
+  Spaltenbreiten-Spec.
+- `pub/_assets/context/_layout_doc_flow.tex:177` — Colophon/Issue-Block
+  druckt hardcodiert `\labeltext{hg}`; "Ed. vs Hrsg." nicht wählbar
+  (`% TODO -> Ed. / Hrsg. einbauen`).
+
+Vor dem nächsten Production-Band anschauen (2026-08-31 Sweep; bewusst
+nicht sofort geschlossen). Aufwand je 1-2h.
+
+### RTL-Template-Variante in jats2html.xsl 📝
+
+`pub/_assets/xslt/jats2html.xsl:357` — `% TODO: Sort this out`: zwei
+alternative `named-content[@content-type='rtl']`-Template-Varianten, eine
+auskommentiert. Betrifft HTML nur bei RTL-Content. Variante entscheiden,
+die andere löschen (~30 min inkl. Test). (2026-08-31 Sweep.)
+
 ---
 
 ## Siehe auch

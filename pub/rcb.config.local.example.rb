@@ -13,7 +13,8 @@
 #
 # ENV vars (RCB_PANDOC_CMD, RCB_SAXON_HE_JAR, RCB_JING_JAR,
 # RCB_SCHXSLT2_XSL, RCB_XPROC_CMD, RCB_CONTEXT_CMD, RCB_ZIP_CMD,
-# RCB_JAVA_CMD, RCB_XSLT_CMD) are an alternative to this file.
+# RCB_JAVA_CMD, RCB_XSLT_CMD, RCB_IMAGE_TOOL) are an alternative to this
+# file.
 
 # CFG['pandoc_cmd']    = 'C:/tools/pandoc/3.10.2/pandoc.exe'
 # CFG['saxon_he_jar']  = 'C:/tools/saxon/saxon-he-12.5.jar'
@@ -24,3 +25,10 @@
 # CFG['zip_cmd']       = 'C:/tools/zip/zip.exe'
 # CFG['java_cmd']      = 'C:/tools/jdk/bin/java.exe'
 # CFG['xslt_cmd']      = 'C:/tools/saxon/transform.bat'   # XSLT runner (default: Saxon transform)
+# CFG['image_tool']    = 'C:/tools/ImageMagick/magick.exe' # convert_images (default: magick)
+
+# Behavior flags (defaults siehe rcb.config.rb bzw. pub/README.md):
+# CFG['context_mode']       = 'article' # ConTeXt --mode= (jats.tex Layout-Modi)
+# CFG['output_images']      = true      # Bilder ins HTML/Output-Verzeichnis kopieren
+# CFG['extract_auto_apply'] = true      # extract_metadata ohne interaktive Nachfrage
+# CFG['nonumheadings']      = true      # Section-Nummerierung aus (Doku siehe rcb.config.rb)

@@ -102,6 +102,7 @@ export RCB_CONTEXT_CMD=/opt/context/bin/context
 export RCB_ZIP_CMD=/usr/bin/zip
 export RCB_JAVA_CMD=/opt/jdk/bin/java
 export RCB_XSLT_CMD=/opt/saxon/transform
+export RCB_IMAGE_TOOL=/opt/ImageMagick/magick
 ```
 
 ENV vars win over the bare defaults; the local file wins over both.

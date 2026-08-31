@@ -117,10 +117,6 @@ task :extract_metadata => [:prepare_assets] do
     source_file = Pathname.new("source/#{basename}.docx")
     template_name = 'metadata-extract.txt'
     pandoc_from = 'docx'
-  when 'xml'
-    source_file = BUILD_DIR / "xml/02-xml-final-#{basename}.xml"
-    template_name = 'metadata-extract-xml.txt'
-    pandoc_from = 'jats'
   when 'md'
     source_file = Pathname.new("source/#{basename}.md")
     template_name = 'metadata-extract.txt'
@@ -398,6 +394,15 @@ end
 
 basename = CFG['basename']
 
+# --- require_article ---
+# Pipeline-Tasks brauchen Artikel-Kontext: CFG['basename'] wird erst von
+# article-level rcb.config.rb gesetzt. Fail-fast statt nil in Task-Namen.
+task :require_article do
+  unless CFG['basename']
+    raise "Pipeline tasks require an article context: CFG['basename'] is not set. Run from an article directory."
+  end
+end
+
 # ============================================
 # MD Pipeline
 # ============================================
@@ -499,12 +504,12 @@ else
 end
 
 desc source_to_md[:desc]
-task :source_to_md => [source_to_md[:out]]
+task :source_to_md => [:require_article, source_to_md[:out]]
 
 # --- promote_md ---
 # Befördert das auto-generierte rohe MD nach source/<basename>.md als
 # Override-Basis zum Editieren. Nimmt das manuelle copy+rename aus dem
-# Override-Workflow heraus (siehe docs/article-workflow.md Schritt 6).
+# Override-Workflow heraus (siehe docs/user/article-workflow.md Schritt 6).
 # Einmalig: existiert der Override schon, wird nicht überschrieben.
 # Dependency auf source_to_md stellt sicher, dass das rohe MD aktuell ist
 # (Rake mtime-gated → normalerweise ein No-op) und der Task auch nach
@@ -538,7 +543,7 @@ file md_final[:out] => [md_final[:in]] do |t|
 end
 
 desc md_final[:desc]
-task :md_final => [md_final[:out]]
+task :md_final => [:require_article, md_final[:out]]
 
 # ============================================
 # XML Pipeline
@@ -589,7 +594,7 @@ file md_to_xml[:out] => [md_to_xml[:in], md_to_xml[:template], md_to_xml[:metada
 end
 
 desc md_to_xml[:desc]
-task :md_to_xml => [md_to_xml[:out]]
+task :md_to_xml => [:require_article, md_to_xml[:out]]
 
 # --- xml_clean ---
 
@@ -657,7 +662,7 @@ file xml_clean[:out] => [xml_clean[:in], xml_clean[:xpl], xml_clean[:catalog], *
 end
 
 desc xml_clean[:desc]
-task :xml_clean => [xml_clean[:out]]
+task :xml_clean => [:require_article, xml_clean[:out]]
 
 # --- validate_xml_rng ---
 
@@ -693,7 +698,7 @@ file validate_xml_rng[:out] => [validate_xml_rng[:in], validate_xml_rng[:schema]
 end
 
 desc validate_xml_rng[:desc]
-task :validate_xml_rng => [validate_xml_rng[:out]]
+task :validate_xml_rng => [:require_article, validate_xml_rng[:out]]
 
 # --- validate_xml_schematron ---
 # SchXslt2 transpiliert .sch zu .xsl. Die Transpilation passiert automatisch,
@@ -801,7 +806,7 @@ file validate_xml_schematron[:out] => [validate_xml_schematron[:in]] + validate_
 end
 
 desc validate_xml_schematron[:desc]
-task :validate_xml_schematron => [validate_xml_schematron[:out]]
+task :validate_xml_schematron => [:require_article, validate_xml_schematron[:out]]
 
 # --- xml_typo ---
 # Typografische Ersetzungen in XML (nach typo-replacements.py)
@@ -834,7 +839,7 @@ file xml_typo[:out] => [xml_typo[:in], xml_typo[:xsl], xml_typo[:catalog]] do |t
 end
 
 desc xml_typo[:desc]
-task :xml_typo => [xml_typo[:out]]
+task :xml_typo => [:require_article, xml_typo[:out]]
 
 # --- xml_final ---
 
@@ -851,7 +856,7 @@ file xml_final[:out] => [xml_final[:in]] do |t|
 end
 
 desc xml_final[:desc]
-task :xml_final => [xml_final[:out]]
+task :xml_final => [:require_article, xml_final[:out]]
 
 # --- xml_publish ---
 
@@ -874,7 +879,7 @@ file xml_publish[:out] => [xml_publish[:in]] do |t|
 end
 
 desc xml_publish[:desc]
-task :xml_publish => [xml_publish[:out]]
+task :xml_publish => [:require_article, xml_publish[:out]]
 
 # --- xml_to_output ---
 
@@ -891,7 +896,7 @@ file xml_to_output[:out] => [xml_to_output[:in]] do |t|
 end
 
 desc xml_to_output[:desc]
-task :xml_to_output => [xml_to_output[:out]]
+task :xml_to_output => [:require_article, xml_to_output[:out]]
 
 # --- xml_to_refs ---
 #
@@ -926,7 +931,7 @@ file xml_to_refs[:out] => [xml_to_refs[:in], xml_to_refs[:xsl], xml_to_refs[:cat
 end
 
 desc xml_to_refs[:desc]
-task :xml_to_refs => [xml_to_refs[:out]]
+task :xml_to_refs => [:require_article, xml_to_refs[:out]]
 
 # --- refs_to_output ---
 
@@ -943,7 +948,7 @@ file refs_to_output[:out] => [refs_to_output[:in]] do |t|
 end
 
 desc refs_to_output[:desc]
-task :refs_to_output => [refs_to_output[:out]]
+task :refs_to_output => [:require_article, refs_to_output[:out]]
 
 # --- xml_to_zip ---
 #
@@ -1022,7 +1027,7 @@ file xml_to_html[:out] => [xml_to_html[:in], xml_to_html[:xsl], xml_to_html[:cat
 end
 
 desc xml_to_html[:desc]
-task :xml_to_html => [xml_to_html[:out]]
+task :xml_to_html => [:require_article, xml_to_html[:out]]
 
 # --- xml_to_html_test ---
 
@@ -1054,7 +1059,7 @@ file xml_to_html_test[:out] => [xml_to_html_test[:in], xml_to_html_test[:xsl], x
 end
 
 desc xml_to_html_test[:desc]
-task :xml_to_html_test => [xml_to_html_test[:out]]
+task :xml_to_html_test => [:require_article, xml_to_html_test[:out]]
 
 # --- html_to_output ---
 
@@ -1071,7 +1076,7 @@ file html_to_output[:out] => [html_to_output[:in]] do |t|
 end
 
 desc html_to_output[:desc]
-task :html_to_output => [html_to_output[:out]]
+task :html_to_output => [:require_article, html_to_output[:out]]
 
 # --- html_test_to_output ---
 
@@ -1091,7 +1096,7 @@ file html_test_to_output[:out] => [html_test_to_output[:in], html_test_to_output
 end
 
 desc html_test_to_output[:desc]
-task :html_test_to_output => [html_test_to_output[:out]]
+task :html_test_to_output => [:require_article, html_test_to_output[:out]]
 
 # ============================================
 # PDF Pipeline
@@ -1147,7 +1152,7 @@ file xml_to_pdf[:out] => [xml_to_pdf[:in], xml_to_pdf[:jats], xml_to_pdf[:layout
 end
 
 desc xml_to_pdf[:desc]
-task :xml_to_pdf => [:convert_images, xml_to_pdf[:out]]
+task :xml_to_pdf => [:require_article, :convert_images, xml_to_pdf[:out]]
 
 # --- pdf_to_output ---
 
@@ -1164,7 +1169,7 @@ file pdf_to_output[:out] => [pdf_to_output[:in]] do |t|
 end
 
 desc pdf_to_output[:desc]
-task :pdf_to_output => [pdf_to_output[:out]]
+task :pdf_to_output => [:require_article, pdf_to_output[:out]]
 
 # --- xml_to_pdf_test ---
 
@@ -1201,7 +1206,7 @@ file xml_to_pdf_test[:out] => [xml_to_pdf_test[:in], xml_to_pdf[:jats], xml_to_p
 end
 
 desc xml_to_pdf_test[:desc]
-task :xml_to_pdf_test => [:convert_images, xml_to_pdf_test[:out]]
+task :xml_to_pdf_test => [:require_article, :convert_images, xml_to_pdf_test[:out]]
 
 # --- pdf_test_to_output ---
 
@@ -1218,20 +1223,20 @@ file pdf_test_to_output[:out] => [pdf_test_to_output[:in]] do |t|
 end
 
 desc pdf_test_to_output[:desc]
-task :pdf_test_to_output => [pdf_test_to_output[:out]]
+task :pdf_test_to_output => [:require_article, pdf_test_to_output[:out]]
 
 # ============================================
 # Build All
 # ============================================
 
 desc "Build publishable outputs (XML, HTML, PDF, images)"
-task :build_publish => [:setup_build, :setup_output, :prepare_assets, :xml_to_output, :html_to_output, :pdf_to_output, :images_to_output, :refs_to_output]
+task :build_publish => [:require_article, :setup_build, :setup_output, :prepare_assets, :xml_to_output, :html_to_output, :pdf_to_output, :images_to_output, :refs_to_output]
 
 desc "Build test outputs (XML, test HTML with CSS, test PDF, images)"
-task :build_test => [:setup_build, :setup_output, :prepare_assets, :xml_to_output, :html_test_to_output, :pdf_test_to_output, :images_to_output]
+task :build_test => [:require_article, :setup_build, :setup_output, :prepare_assets, :xml_to_output, :html_test_to_output, :pdf_test_to_output, :images_to_output]
 
 desc "Build everything (publish + test)"
-task :build_all => [:build_publish, :build_test]
+task :build_all => [:require_article, :build_publish, :build_test]
 
 # ============================================
 # Scaffold Tasks
@@ -1398,7 +1403,7 @@ task :init_article do
   puts "Next:"
   puts "  1. cp your-file.docx #{basename}/source/#{basename}.docx"
   puts "  2. cd #{basename}/"
-  puts "  3. rcb extract_metadata"
+  puts "  3. rcb-dev extract_metadata"
 end
 
 # ============================================
@@ -1406,7 +1411,7 @@ end
 # ============================================
 
 task :default => [:validate_config] do
-  puts "Run 'rvw run rcb list' to see all available tasks"
+  puts "Run 'rcb-dev list' to see all available tasks"
 end
 
 # ============================================
