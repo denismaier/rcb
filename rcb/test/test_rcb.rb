@@ -3,46 +3,106 @@
 require_relative 'test_helper'
 
 class TestRCB < Minitest::Test
+  # --- test_resolve_start ---
+
+  def test_resolve_start_returns_cwd_when_buildable
+    Dir.mktmpdir do |tmp|
+      FileUtils.mkdir_p(File.join(tmp, "article"))
+      File.write(File.join(tmp, ".rcbroot"), "")
+      File.write(File.join(tmp, "rcb.rake"), "")
+      File.write(File.join(tmp, "article", "rcb.config.rb"), "")
+
+      root, start = RCB.resolve_start(Pathname.new(File.join(tmp, "article")))
+
+      assert_equal Pathname.new(tmp).to_s, root.to_s
+      assert_equal Pathname.new(File.join(tmp, "article")).to_s, start.to_s
+    end
+  end
+
+  def test_resolve_start_moves_up_from_non_level_dir
+    Dir.mktmpdir do |tmp|
+      FileUtils.mkdir_p(File.join(tmp, "article", "source"))
+      File.write(File.join(tmp, ".rcbroot"), "")
+      File.write(File.join(tmp, "rcb.rake"), "")
+      File.write(File.join(tmp, "article", "metadata.yaml"), "")
+
+      root, start = RCB.resolve_start(Pathname.new(File.join(tmp, "article", "source")))
+
+      assert_equal Pathname.new(tmp).to_s, root.to_s
+      assert_equal Pathname.new(File.join(tmp, "article")).to_s, start.to_s
+    end
+  end
+
+  def test_resolve_start_accepts_each_per_level_file_as_buildable
+    Dir.mktmpdir do |tmp|
+      File.write(File.join(tmp, ".rcbroot"), "")
+
+      %w[rcb.rake rcb.config.rb metadata.yaml].each do |marker|
+        dir = File.join(tmp, "level_#{marker}")
+        FileUtils.mkdir_p(dir)
+        File.write(File.join(dir, marker), "")
+
+        _root, start = RCB.resolve_start(Pathname.new(dir))
+
+        assert_equal Pathname.new(dir).to_s, start.to_s,
+                     "#{marker} should mark #{dir} as buildable"
+      end
+    end
+  end
+
+  def test_resolve_start_refuses_without_rcbroot
+    Dir.mktmpdir do |tmp|
+      FileUtils.mkdir_p(File.join(tmp, "subdir"))
+
+      assert_raises(SystemExit) do
+        RCB.resolve_start(Pathname.new(File.join(tmp, "subdir")))
+      end
+    end
+  end
+
+  def test_resolve_start_refuses_when_nothing_buildable
+    Dir.mktmpdir do |tmp|
+      FileUtils.mkdir_p(File.join(tmp, "subdir"))
+      File.write(File.join(tmp, ".rcbroot"), "")
+
+      assert_raises(SystemExit) do
+        RCB.resolve_start(Pathname.new(File.join(tmp, "subdir")))
+      end
+    end
+  end
+
   # --- test_find_cascade ---
 
-  def test_find_cascade_walks_up_to_rcbroot
+  def test_find_cascade_collects_rakefiles_and_dirs
     Dir.mktmpdir do |tmp|
       FileUtils.mkdir_p(File.join(tmp, "journal", "article"))
       File.write(File.join(tmp, ".rcbroot"), "")
       File.write(File.join(tmp, "rcb.rake"), "")
       File.write(File.join(tmp, "journal", "rcb.rake"), "")
 
-      root, rakefiles, cascade_dirs = RCB.find_cascade(Pathname.new(File.join(tmp, "journal", "article")))
+      rakefiles, cascade_dirs = RCB.find_cascade(
+        Pathname.new(File.join(tmp, "journal", "article")),
+        Pathname.new(tmp)
+      )
 
       assert_equal 2, rakefiles.length  # root + journal level
-      assert_match(/\/rcb\.rake$/, rakefiles.first.to_s)  # root first
+      assert_match(/rcb\.rake$/, rakefiles.first.to_s)  # root first
       assert_equal 3, cascade_dirs.length  # article, journal, tmp (root)
       assert_match(/article$/, cascade_dirs.first.to_s)  # start_dir is first
-      assert Pathname.new(tmp).expand_path.to_s.include?(cascade_dirs.last)  # root is last
-      assert Pathname.new(tmp).expand_path.to_s.include?(root.to_s)
+      assert_equal Pathname.new(tmp).to_s, cascade_dirs.last  # root is last
     end
   end
 
-  def test_find_cascade_finds_rcbroot_at_start_dir
+  def test_find_cascade_stops_at_root
     Dir.mktmpdir do |tmp|
       File.write(File.join(tmp, ".rcbroot"), "")
       File.write(File.join(tmp, "rcb.rake"), "")
 
-      root, rakefiles, cascade_dirs = RCB.find_cascade(Pathname.new(tmp))
+      rakefiles, cascade_dirs = RCB.find_cascade(Pathname.new(tmp), Pathname.new(tmp))
 
       assert_equal 1, rakefiles.length
       assert_equal 1, cascade_dirs.length
-      assert Pathname.new(tmp).expand_path.to_s.include?(root.to_s)
-    end
-  end
-
-  def test_find_cascade_raises_error_without_rcbroot
-    Dir.mktmpdir do |tmp|
-      FileUtils.mkdir_p(File.join(tmp, "subdir"))
-
-      assert_raises(SystemExit) do
-        RCB.find_cascade(Pathname.new(File.join(tmp, "subdir")))
-      end
+      assert_equal Pathname.new(tmp).to_s, cascade_dirs.last
     end
   end
 

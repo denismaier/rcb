@@ -1,14 +1,15 @@
 # RCB Core
 
-**Status:** current as of 2026-08-28
-**Reference:** `rcb/lib/rcb.rb` (228 lines), `rcb/exe/rcb`
+**Status:** current as of 2026-09-10
+**Reference:** `rcb/lib/rcb.rb` (274 lines), `rcb/exe/rcb`
 
 ## Overview
 
 RCB (Ruby Cascade Build) is a small Rake-based build system that
-loads configuration and tasks from a directory cascade. It walks
-upward from the current working directory until it finds `.rcbroot`,
-collecting per-level files in path order. The result is a single
+loads configuration and tasks from a directory cascade. It relocates
+to the nearest contributing cascade level if the cwd is not a level
+itself, then walks upward until it finds `.rcbroot`, collecting
+per-level files in path order. The result is a single
 unified Rake invocation whose configuration and task definitions
 contribute from each cascade level.
 
@@ -32,10 +33,37 @@ pub/               <- rcb.rake + .rcbroot -> STOP
 ```
 
 `.rcbroot` is an empty marker file at the cascade root. Without it,
-rcb refuses to run. `find_cascade` walks from cwd up the parent chain,
-collecting any `rcb.rake` it finds and recording the directory list.
-The full path is exposed to user code as `$rcb_cascade_dirs`
-(root-first, frozen).
+rcb refuses to run.
+
+### Start Resolution
+
+Before the walk, `resolve_start(cwd)` decides where the cascade
+should start. It returns the project root and the start directory:
+
+1. Ascend to `.rcbroot`. Not found → rcb refuses to run.
+2. A directory is **buildable** if it contains at least one per-level
+   file (`rcb.rake`, `rcb.config.rb`, or `metadata.yaml`).
+3. If the cwd is buildable, it is the start directory (no-op, behavior
+   identical to running there directly).
+4. Otherwise rcb ascends to the nearest buildable ancestor and
+   `Dir.chdir`s there, printing `→ running in <dir>`. If no ancestor
+   up to the root is buildable, rcb refuses to run.
+
+Consequence: invoking rcb from a non-level directory (e.g. an
+article's `source/`) relocates the build to the owning level instead
+of writing `.build/` into the wrong place. The relocation is purely
+process-local — the caller's shell stays where it is. Whether the
+*relocated* level makes sense for a given task is not the gem's
+concern; task-level guards (`require_article` in the demo pipeline)
+reject invocations that lack the context they need.
+
+`find_cascade(start_dir, root)` is the pure walker underneath: given
+the resolved start and root, it collects any `rcb.rake` it finds and
+records the directory list. The full path is exposed to user code as
+`$rcb_cascade_dirs` (root-first, frozen).
+
+Reference: `rcb/lib/rcb.rb:52-99` (resolve_start, find_cascade),
+`rcb/lib/rcb.rb:191-198` (run wiring).
 
 ### Two-Phase Loading
 
@@ -51,7 +79,7 @@ If config and tasks lived in the same file, deep-cascade tasks would
 read CFG values not yet populated by their own level's setup. The
 two-phase split avoids that.
 
-Reference: `rcb/lib/rcb.rb:171-192`.
+Reference: `rcb/lib/rcb.rb:208-229`.
 
 ### Per-Level Files
 
@@ -67,6 +95,12 @@ Each cascade directory may contain:
 A level needs neither config nor rakefile if it has nothing to
 contribute. Journal and volume levels in the demo are pure structural
 nesting with only `metadata.yaml`.
+
+One derived role: any of `rcb.rake`, `rcb.config.rb`, or
+`metadata.yaml` marks a directory as buildable, i.e. a valid
+invocation point (see Start Resolution above). A directory with
+none of the three — `source/`, `_assets/`, pure grouping folders —
+is not a valid invocation point; rcb relocates out of it.
 
 ## Configuration (CFG)
 
@@ -118,7 +152,7 @@ loops over `manifest['sources']`, filters by extension, and defines
 one file task per image. Without the manifest, each rakefile would
 need its own filesystem walks.
 
-Reference: `rcb/lib/rcb.rb:179-192`.
+Reference: `rcb/lib/rcb.rb:216-229`.
 
 ### Scanners
 
@@ -188,7 +222,7 @@ entries; later (deeper) iterations win. Each entry becomes a
 tasks reference assets by their `.build/_assets/...` path, so they
 see the resolved (shadowed) version.
 
-Reference: `rcb/lib/rcb.rb:73-90, 128-141`.
+Reference: `rcb/lib/rcb.rb:101-118, 156-168`.
 
 ## Warnings Framework
 
@@ -206,7 +240,7 @@ when a build aborts. Designed for situations where stopping the build
 would be over-strict but the user should still see the issue (the
 canonical case is the demo's MD-override stale detection).
 
-Reference: `rcb/lib/rcb.rb:29-33, 220-227`.
+Reference: `rcb/lib/rcb.rb:33-38, 267-274`.
 
 ## CLI
 

@@ -24,6 +24,10 @@ module RCB
    METADATA_FILE = 'metadata.yaml'
    MANIFEST_PATH = BUILD_DIR / 'manifest.yaml'
 
+  # Files that mark a directory as a cascade level (buildable = valid
+  # invocation point). See docs/specs/core.md, "Start Resolution".
+  PER_LEVEL_FILES = ['rcb.rake', 'rcb.config.rb', METADATA_FILE].freeze
+
   # Deferred warnings — collected during the build, summarised at process exit.
   # Use RCB.warn(msg) to add. Non-fatal, visible as last thing on the terminal.
   WARNINGS = []
@@ -40,9 +44,12 @@ module RCB
     end
   end
 
-  def self.find_cascade(start_dir)
-
-    # Find .rcbroot
+  # Resolve where the build should run. Returns [root, start_dir]:
+  # root = .rcbroot directory, start_dir = nearest buildable directory
+  # (cwd itself if it contributes per-level files, otherwise the
+  # nearest ancestor that does). Guards live here; find_cascade is a
+  # pure walker.
+  def self.resolve_start(start_dir)
     root = start_dir.ascend { |dir| break dir if (dir + '.rcbroot').exist? }
     unless root
       $stderr.puts "\n⚠️  Error: Not in an RCB project"
@@ -51,7 +58,29 @@ module RCB
       exit 1
     end
 
-    # Collect rcb.rake files (root-first) AND cascade directories
+    build_dir = nil
+    current = start_dir
+    loop do
+      if PER_LEVEL_FILES.any? { |f| (current + f).exist? }
+        build_dir = current
+        break
+      end
+      break if current == root
+      current = current.parent
+    end
+
+    unless build_dir
+      $stderr.puts "\n⚠️  Error: No buildable directory found between #{start_dir} and project root #{root}"
+      $stderr.puts "   A buildable directory contains at least one of: #{PER_LEVEL_FILES.join(', ')}"
+      exit 1
+    end
+
+    [root, build_dir]
+  end
+
+  # Collect rcb.rake files (root-first) AND cascade directories, walking
+  # from start_dir up to root. Pure walker — guards live in resolve_start.
+  def self.find_cascade(start_dir, root)
     rakefiles = []
     cascade_dirs = []
     current = start_dir
@@ -66,8 +95,7 @@ module RCB
 
     rakefiles.reverse!
 
-    [root, rakefiles, cascade_dirs]
-  
+    [rakefiles, cascade_dirs]
   end
 
   def self.scan_assets(dirs, assets_dir_name)
@@ -160,7 +188,16 @@ module RCB
     # Set global options for tasks to access
     $rcb_options = options
 
-    root, rakefiles, cascade_dirs = find_cascade(Pathname.pwd)
+    # Resolve start BEFORE anything relative is resolved or written:
+    # relocate to the nearest buildable cascade level if cwd is not one.
+    start = Pathname.pwd
+    root, build_dir = resolve_start(start)
+    unless build_dir == start
+      puts "→ running in #{build_dir}"
+      Dir.chdir(build_dir)
+    end
+
+    rakefiles, cascade_dirs = find_cascade(build_dir, root)
 
     ensure_dirs([BUILD_DIR])
 

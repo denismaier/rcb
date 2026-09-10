@@ -526,6 +526,54 @@ Raise-Meldung) und positiv am Demo-Artikel (`build_all` grün).
 
 ---
 
+## 2026-09 — Start Resolution
+
+### 2026-09-10: Buildable-Start via `resolve_start` (Auto-Relokation)
+**Decision:** rcb relokationiert vor dem Cascade-Walk zum nächsten
+buildbaren Verzeichnis, wenn das cwd keines ist. Buildable = enthält
+mindestens eine Per-Level-Datei (`rcb.rake`, `rcb.config.rb`,
+`metadata.yaml`, als `PER_LEVEL_FILES`-Konstante). Neue Methode
+`resolve_start(cwd)` liefert `[root, start_dir]` und trägt alle
+Guards; `find_cascade(start_dir, root)` ist danach ein reiner Walker
+ohne `exit`, Signatur von 1 auf 2 Argumente geändert, Rückgabe von
+`[root, rakefiles, cascade_dirs]` auf `[rakefiles, cascade_dirs]`
+verkleinert. `run` macht das `Dir.chdir` + Hinweiszeile
+`→ running in <dir>` bevor irgendetwas Relatives aufgelöst oder
+geschrieben wird.
+**Rationale:** Problem: `rcb` aus einem Nicht-Ebenen-Ordner (z.B.
+Artikel-`source/`) lief heute *nicht* auf einen Fehler, sondern
+lieferte eine plausible Task-Liste (Exit 0) und schrieb `.build/`
+inkl. Manifest ins falsche Verzeichnis — alle relativen Task-Pfade
+hätten gegen das falsche cwd aufgelöst. Der `.rcbroot`-Guard griff
+nicht, weil das Root ja oberhalb liegt. Kriterium bewusst *nicht*
+`metadata.yaml` allein (das wäre Pipeline-Wissen — andere Pipelines
+oder Volume-Builds könnten anderes brauchen) und *nicht* `rcb.rake`
+allein (spec: pro Ebene optional), sondern das generische
+„trägt irgendetwas zur Kaskade bei". Schichten-Trennung: Das Gem
+entscheidet *wo* gebaut wird (Struktur), die Pipeline *was*
+(`require_article` bleibt der semantische Guard — von Journal- oder
+Publisher-Ebene aus scheitert `build_all` weiterhin sauber). Kein
+Fallback aufs Root bei beitragslosem Baum bis hinauf zum `.rcbroot`
+— dann ist die Struktur kaputt, Fehlermeldung statt Vermutung
+(stilistisch konsistent mit dem bestehenden `.rcbroot`-Guard).
+**Changes:** `rcb/lib/rcb.rb` (`PER_LEVEL_FILES`, `resolve_start`,
+`find_cascade`-Refaktorierung, `run`-Verdrahtung), `rcb/test/
+test_rcb.rb` (5 neue `resolve_start`-Tests, 2 `find_cascade`-Tests
+an neue Signatur angepasst), `docs/specs/core.md` (neuer Abschnitt
+„Start Resolution", Per-Level-Files um Buildable-Rolle ergänzt,
+Zeilen-Referenzen aktualisiert). TDD: Spec → rot (7) → grün.
+Verifikation: `rake test` 20 runs / 55 assertions / 0 failures;
+Smoke: `rcb-dev list` aus Artikel-`source/` relokationiert mit
+Hinweis und hinterlässt kein `.build/`; von der Artikelebene No-op
+(keine Zeile); von `demoverlag/` Sprung nach `pub/` (219 Tasks);
+außerhalb: bestehender „Not in an RCB project"-Fehler, Exit 1.
+Gem-Version 0.1.0 → 0.2.0 (neues Feature + `find_cascade`-
+Signaturbruch; `rcb`-Aufrufe gegen das installierte Gem zeigten
+vorher die alte Version — Relokation greift erst nach `gem build` +
+`gem install`).
+
+---
+
 ## Abgeschlossene Phasen (Übersicht)
 
 Kern- und Pipeline-Phasen, die in die obigen Entscheidungen mündeten:
