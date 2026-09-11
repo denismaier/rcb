@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["denis.maier@unibe.ch"]
 
   spec.summary       = "Ruby Cascade Build with cascading configuration"
-  spec.description   = "Rake-based build system with hierarchical configuration similar to doit-cascade"
+  spec.description   = "Rake-based build system with cascading configuration: rakefiles and config files from parent directories are collected and merged, so a build inherits everything it needs from the levels above"
   spec.homepage      = "https://github.com/denismaier/rcb"
   spec.license       = "CC0-1.0"
   spec.required_ruby_version = ">= 3.0.0"

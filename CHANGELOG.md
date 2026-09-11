@@ -3,6 +3,22 @@
 Notable changes to **RCB** (the `rcb-cascade` gem and the publishing
 pipeline under `pub/`).
 
+## Unreleased
+
+Pipeline fixes and metadata cleanup (no gem code changes; the gem
+stays at 0.2.0).
+
+- **Fixed (pipeline):** `init_article` now derives the suggested article
+  number from the highest existing article directory in the volume
+  (parsed from the `<abbrev>-<year>-<num>-<slug>` pattern) instead of
+  counting directories — starting mid-volume no longer suggests
+  numbers that collide with earlier articles.
+- **Fixed (pipeline):** Ctrl+C during the `init_article` prompts now
+  aborts cleanly with an "Aborted." message instead of an unhandled
+  `Interrupt` backtrace.
+- **Changed (gem metadata):** gem description and README no longer
+  reference doit-cascade; they describe the cascade mechanism itself.
+
 ## 0.2.0 — 2026-09-10
 
 Start resolution: rcb now relocates to the right build level before

@@ -1,6 +1,8 @@
 # RCB - Rake Cascading Build
 
-Rake-based cascading build system (analogous to doit-cascade's `cbs`).
+Rake-based cascading build system: rakefiles and configuration files
+from parent directories are collected and merged, so a build inherits
+everything it needs from the levels above.
 
 ## Installation
 

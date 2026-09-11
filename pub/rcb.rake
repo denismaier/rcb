@@ -1262,36 +1262,43 @@ task :init_article do
 
   # Suggest next article number from existing directories
   existing = Pathname.pwd.children.select(&:directory?).reject { |d| d.basename.to_s.start_with?('.') }
-  next_num = existing.count + 1
+  nums = existing.map { |d| d.basename.to_s[/\A#{abbrev}-#{year}-(\d+)-/, 1] }.compact.map(&:to_i)
+  next_num = (nums.max || 0) + 1
 
-  puts "=== New Article ==="
-  puts ""
+  begin
+    puts "=== New Article ==="
+    puts ""
 
-  # Article number
-  print "Article number [#{next_num}]: "
-  input = $stdin.gets.chomp
-  num = input.empty? ? next_num : input.to_i
+    # Article number
+    print "Article number [#{next_num}]: "
+    input = $stdin.gets.chomp
+    num = input.empty? ? next_num : input.to_i
 
-  # Author last name
-  print "Author last name: "
-  author_name = $stdin.gets.chomp
-  if author_name.empty?
-    raise "Author last name is required"
+    # Author last name
+    print "Author last name: "
+    author_name = $stdin.gets.chomp
+    if author_name.empty?
+      raise "Author last name is required"
+    end
+    author_slug = author_name.downcase.gsub(/\s+/, '-')
+
+    # Construct basename (= directory name)
+    basename = "#{abbrev}-#{year}-#{num}-#{author_slug}"
+
+    puts ""
+    puts "  #{basename}/"
+    puts "    rcb.rake"
+    puts "    metadata.yaml"
+    puts "    source/"
+    puts "      images/"
+    puts ""
+    print "OK? [Y/n]: "
+    confirm = $stdin.gets.chomp
+  rescue Interrupt
+    puts "\nAborted."
+    next
   end
-  author_slug = author_name.downcase.gsub(/\s+/, '-')
 
-  # Construct basename (= directory name)
-  basename = "#{abbrev}-#{year}-#{num}-#{author_slug}"
-
-  puts ""
-  puts "  #{basename}/"
-  puts "    rcb.rake"
-  puts "    metadata.yaml"
-  puts "    source/"
-  puts "      images/"
-  puts ""
-  print "OK? [Y/n]: "
-  confirm = $stdin.gets.chomp
   unless confirm.empty? || confirm.downcase == 'y'
     puts "Aborted."
     next
