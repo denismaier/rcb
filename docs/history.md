@@ -526,7 +526,7 @@ Raise-Meldung) und positiv am Demo-Artikel (`build_all` grün).
 
 ---
 
-## 2026-09 — Start Resolution, Template-Metadaten
+## 2026-09 — Start Resolution, Template-Metadaten, Demo-Typografie
 
 ### 2026-09-10: Buildable-Start via `resolve_start` (Auto-Relokation)
 **Decision:** rcb relokationiert vor dem Cascade-Walk zum nächsten
@@ -597,6 +597,37 @@ Verifikation: jds-Demo-Build zeigt „Journal of Demo Studies" statt
 „Judaica: Neue digitale Folge". Hinweis: `footer=chapterfooter`
 bleibt in beiden Modi auskommentiert — der Footer läuft aktuell
 nicht mit, zieht bei Aktivierung aber automatisch die Kurzform.
+
+### 2026-09-28: Demo-Typografie auf gebindete Fonts, Publisher-Ebenen-Shadowing
+**Decision:** Die Demoverlage bekommt eine eigene Font-Ebene:
+`demoverlag/_assets/context/_layout_doc_fonts.tex` definiert die
+Schrift komplett aus ConTeXt-gebindeten Fonts (TeX Gyre Pagella rm /
+Heros ss / LM Math mm / Gyre Cursor tt), Default-Style rm
+(Pagella-Body). dhr überschattet per vollständiger Kopie mit
+`\setupbodyfont[mainface,ss,11pt]` (Heros-Body — idiomatischer
+Stil-Switch statt rm-Redefinition, weil die rm-Fallbacks bei
+ss-Body ohnehin nicht griffen) plus eigenem
+`_layout_doc_paragraph.tex` (Blockabsätze: `\setupindenting[never]`
++ `\setupwhitespace[medium]`). jds erbt die Demoverlag-Ebene
+unverändert: Pagella-Body + Baseline-Einzug. Demo-Rezensionstitel
+vereinfacht.
+**Rationale:** Demo vs. Produktion sauber trennen: die Baseline
+(Cardo/Myriad/SBL-Fallbacks, lokal installierte Fonts) bleibt der
+JNDF-Produktion vorbehalten; die Demo läuft auf jedem ConTeXt ohne
+Installation (TeX Gyre). Der harte jds/dhr-Kontrast zeigt die
+Multi-Journal-Fähigkeit: Serif+Indent (Pagella) vs.
+Grotesk+Blockabsätze (Heros). Skript-Fallbacks (Hebräisch etc.)
+bewusst raus — kein Demo-Content. Shadowing ersetzt ganze Dateien,
+deshalb vollständige Kopie auf dhr-Ebene (einziger Unterschied: ss
+im `\setupbodyfont`).
+**Changes:** Neu `demoverlag/_assets/context/_layout_doc_fonts.tex`
+und `dhr/_assets/context/_layout_doc_paragraph.tex`; `dhr/.../
+_layout_doc_fonts.tex` wird ss-Variante der Demoverlag-Datei; Demo-
+Metadaten (Titel). `demoverlag/` braucht dafür keine Per-Level-Datei:
+`find_cascade` nimmt alle Verzeichnisse im Pfad in `cascade_dirs`
+auf (rcb.rb:91), `scan_assets` liest `_assets` je Ebene — last
+wins. Verifikation: Builds beider Demo-Artikel (User) — jds
+Pagella+Indent, dhr Heros+Blockabsätze, beide grün.
 
 ---
 

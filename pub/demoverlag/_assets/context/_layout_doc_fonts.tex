@@ -1,11 +1,13 @@
 \startenvironment *
 
-% DHR-Override (Demo): kompletter Sans-Satz — Bodyfont-Style ss statt
-% rm (TeX Gyre Heros statt Pagella). Vollständige Kopie der
-% Demoverlag-Ebene (pub/demoverlag/_assets/context/_layout_doc_fonts.tex),
-% einziger Unterschied: unten ss im \setupbodyfont.
-% Journal-Level-Shadowing: diese Datei ersetzt die Demoverlag-Ebene
-% fuer alle Artikel unter dhr/.
+% Demo-Font-Setup (Demoverlag-Ebene): nur ConTeXt-gebindete Fonts,
+% keine lokal installierten Schriften, keine Skript-Fallbacks
+% (Hebräisch etc. ist kein Demo-Content — die produktive Baseline
+% mit SBL/Scheherazade/Gentium-Fallbacks steht in
+% pub/_assets/context/_layout_doc_fonts.tex).
+% Journal-Level-Shadowing: diese Datei ersetzt die Baseline fuer
+% alle Artikel unter demoverlag/. Default-Style: rm (TeX Gyre
+% Pagella); dhr schaltet per eigener Kopie auf ss (TeX Gyre Heros).
 
 % Kursivkorrektur
 \setupitaliccorrection[global, always]
@@ -54,7 +56,7 @@
 
 \setupbodyfont[
     mainface,
-    ss,
+    rm,
     11pt,
     ]
 

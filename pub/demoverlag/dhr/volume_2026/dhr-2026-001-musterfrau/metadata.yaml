@@ -4,8 +4,8 @@
 _extract:
   protect: []
 
-title: "Eine zweite Lorem-Rezension: Musterbands Fortsetzung"
-subtitle: "Ein Untertitel zu Demonstrationszwecken"
+title: "Eine zweite Demo-Rezension"
+subtitle: "Mit einem Untertitel"
 
 author:
   - surname: Musterfrau

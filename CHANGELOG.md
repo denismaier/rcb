@@ -25,6 +25,16 @@ stays at 0.2.0).
   (from `<abbrev-journal-title>`). The title block shows the full
   journal name, the footer variant the abbreviation — building
   another journal labels its PDF correctly, like HTML already did.
+- **Changed (pipeline/demo):** The demo publisher now carries its own
+  font level using only ConTeXt-bundled fonts: `demoverlag/_assets/
+  context/_layout_doc_fonts.tex` (TeX Gyre Pagella as the default
+  body, Heros as sans). dhr shadows it with a copy that switches the
+  body to sans (`\setupbodyfont[mainface,ss,11pt]`) plus a paragraph
+  override (space between paragraphs instead of first-line indent),
+  so the two demo journals contrast serif+indent against
+  grotesk+block paragraphs. jds therefore moves from Cardo to
+  Pagella; the production baseline (Cardo/Myriad + script fallbacks)
+  stays with JNDF.
 
 ## 0.2.0 — 2026-09-10
 
