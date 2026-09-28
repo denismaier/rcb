@@ -18,6 +18,13 @@ stays at 0.2.0).
   `Interrupt` backtrace.
 - **Changed (gem metadata):** gem description and README no longer
   reference doit-cascade; they describe the cascade mechanism itself.
+- **Fixed (pipeline):** ConTeXt templates no longer hardcode the
+  journal name ("Judaica: Neue digitale Folge"): `jats.tex` now
+  registers `<journal-meta>` and fills the document variables
+  `journal-title` (from `<journal-title>`) and `journal-abbrev`
+  (from `<abbrev-journal-title>`). The title block shows the full
+  journal name, the footer variant the abbreviation — building
+  another journal labels its PDF correctly, like HTML already did.
 
 ## 0.2.0 — 2026-09-10
 

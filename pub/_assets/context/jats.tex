@@ -9,6 +9,7 @@
 	\xmlsetsetup{#1}{app[@content-type='figures']}{xml:app-figures}
 	% Metadaten
 	\xmlsetsetup{#1}{article-meta}{xml:*}
+	\xmlsetsetup{#1}{journal-meta}{xml:*}
 	% Titelei
 	\xmlsetsetup{#1}{contrib-group|contrib|name|string-name|surname|given-names|aff|email}{xml:*}
 	\xmlsetsetup{#1}{front/notes}{xml:front:notes}
@@ -377,6 +378,21 @@
 \stopxmlsetups
 
 %Metadaten
+\startxmlsetups xml:journal-meta
+	\setupdocument [
+		journal-title=\xmlfilter{#1}{/journal-title-group/journal-title/command(xml:journal-meta:journal-title)},
+		journal-abbrev=\xmlfilter{#1}{/journal-title-group/abbrev-journal-title/command(xml:journal-meta:journal-abbrev)},
+	]
+\stopxmlsetups
+
+\startxmlsetups xml:journal-meta:journal-title
+	\xmlflush{#1}
+\stopxmlsetups
+
+\startxmlsetups xml:journal-meta:journal-abbrev
+	\xmlflush{#1}
+\stopxmlsetups
+
 \startxmlsetups xml:article-meta
 	\setupdocument [
 		pub-year=\xmlfilter{#1}{/pub-date/year/command(xml:article-meta:pubdate:year)},

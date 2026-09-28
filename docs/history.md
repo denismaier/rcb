@@ -526,7 +526,7 @@ Raise-Meldung) und positiv am Demo-Artikel (`build_all` grün).
 
 ---
 
-## 2026-09 — Start Resolution
+## 2026-09 — Start Resolution, Template-Metadaten
 
 ### 2026-09-10: Buildable-Start via `resolve_start` (Auto-Relokation)
 **Decision:** rcb relokationiert vor dem Cascade-Walk zum nächsten
@@ -571,6 +571,32 @@ Gem-Version 0.1.0 → 0.2.0 (neues Feature + `find_cascade`-
 Signaturbruch; `rcb`-Aufrufe gegen das installierte Gem zeigten
 vorher die alte Version — Relokation greift erst nach `gem build` +
 `gem install`).
+
+### 2026-09-28: ConTeXt-Journalname aus Metadaten statt hardcoded
+**Decision:** Die ConTeXt-Templates holen den Journalnamen aus dem
+JATS-`<journal-meta>` statt ihn hart zu codieren. `jats.tex`
+registriert `journal-meta` (neues Setup `xml:journal-meta`) und füllt
+`\documentvariable{journal-title}` aus `<journal-title>` sowie
+`\documentvariable{journal-abbrev}` aus `<abbrev-journal-title>`.
+Der Titelblock (`journalinfostitle`) zeigt den vollen Namen, die
+Footer-Variante ver2 die Kurzform; ver1 (unbenutzt) mitgefixt.
+**Rationale:** Der Name stand an drei Stellen hart in den Layouts,
+obwohl er via Metadaten-Layering (pub → Journal → Volume → Artikel)
+längst bis ins JATS-XML fließt — `jats2html.xsl` liest ihn dort
+schon, ConTeXt übersprang `journal-meta` mangels Registrierung. Ein
+anderes Journal (jds, dhr) hätte falsch betitelte PDFs erzeugt.
+Kurzform im Footer bewusst aus `abbrev-title` (Platzgründe,
+Kürzel-Design); kein TeX-Fallback bei fehlendem `abbrev-title`, da
+alle Layer es setzen.
+**Changes:** `pub/_assets/context/jats.tex` (Registrierung +
+`xml:journal-meta`-Setup, ohne `\xmlflush` — daraus wird nichts
+gerendert, anders als `article-meta`, wo der Flush die
+`contrib`-Setups für die `\AuthorList` triggert),
+`_layout_doc_flow.tex:164`, `_layout_doc_page_header_footer.tex:17,24`.
+Verifikation: jds-Demo-Build zeigt „Journal of Demo Studies" statt
+„Judaica: Neue digitale Folge". Hinweis: `footer=chapterfooter`
+bleibt in beiden Modi auskommentiert — der Footer läuft aktuell
+nicht mit, zieht bei Aktivierung aber automatisch die Kurzform.
 
 ---
 
